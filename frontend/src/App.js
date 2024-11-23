@@ -1,4 +1,3 @@
-// frontend/src/App.js
 import React, { useState, useEffect } from "react";
 import "./styles/App.css";
 import PlayerList from "./components/PlayerList";
@@ -17,7 +16,18 @@ function App() {
       try {
         const response = await fetch(`${API_BASE_URL}/get_player_data`);
         const data = await response.json();
-        setPlayerData(data);
+        const updatedData = data.map((player) => ({
+          ...player,
+          element_type:
+            player.element_type === "FWD"
+              ? 4
+              : player.element_type === "MID"
+              ? 3
+              : player.element_type === "DEF"
+              ? 2
+              : 1, // GKP
+        }));
+        setPlayerData(updatedData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

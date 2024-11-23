@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../styles/PlayerList.css";
 
 function PlayerList({ playerData, selectedPlayers, setSelectedPlayers }) {
-  const [filter, setFilter] = useState("Global");
+  const [filter, setFilter] = useState("All players");
   const [searchTerm, setSearchTerm] = useState("");
 
   const handlePlayerSelect = (player) => {
@@ -40,7 +40,7 @@ function PlayerList({ playerData, selectedPlayers, setSelectedPlayers }) {
 
   const filteredPlayers = playerData.filter((player) => {
     const position = ["GKP", "DEF", "MID", "FWD"][player.element_type - 1];
-    if (filter !== "Global" && filter !== position) {
+    if (filter !== "All players" && filter !== position) {
       return false;
     }
     if (
@@ -59,7 +59,7 @@ function PlayerList({ playerData, selectedPlayers, setSelectedPlayers }) {
       <h2>Player Selection</h2>
       <div>
         <select value={filter} onChange={handleFilterChange}>
-          <option value="Global">Global</option>
+          <option value="All players">All players</option>
           <option value="GKP">Goalkeepers</option>
           <option value="DEF">Defenders</option>
           <option value="MID">Midfielders</option>

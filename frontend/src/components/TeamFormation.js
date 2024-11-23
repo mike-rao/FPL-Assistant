@@ -8,117 +8,71 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
     }
   };
 
+  const getPositionCount = (position, includeSubs = false) => {
+    const players = includeSubs ? selectedPlayers : selectedPlayers.slice(0, 11);
+    return players.filter((p) => p.element_type === position).length;
+  };
+
+  const starters = selectedPlayers.slice(0, 11);
+  const substitutes = selectedPlayers.slice(11).sort((a, b) => {
+    // Sort substitutes, goalkeepers first
+    if (a.element_type === 1 && b.element_type !== 1) return -1;
+    if (a.element_type !== 1 && b.element_type === 1) return 1;
+    return 0; 
+  });
+
   return (
     <div className="middle-column">
       <h2>Team Formation</h2>
       <div className="formation">
         {/* Goalkeeper */}
-        <div
-          className="player-slot"
-          onClick={() =>
-            handlePlayerSelect(
-              selectedPlayers.find((p) =>
-                ["GKP", "DEF", "MID", "FWD"][p.element_type - 1] === "GKP",
-              ),
-            )
-          }
-        >
-          {selectedPlayers.find(
-            (p) => ["GKP", "DEF", "MID", "FWD"][p.element_type - 1] === "GKP",
-          )?.first_name || ""}
+        <div className="player-row">
+          {Array.from({ length: getPositionCount(1) }).map((_, index) => (
+            <div key={index} className="player-slot">
+              {starters.filter((p) => p.element_type === 1)[index]
+                ?.second_name || ""}
+            </div>
+          ))}
         </div>
 
         {/* Defenders */}
-        {Array.from({ length: 4 }).map((_, index) => (
-          <div
-            key={index}
-            className="player-slot"
-            onClick={() =>
-              handlePlayerSelect(
-                selectedPlayers[
-                  selectedPlayers.findIndex((p) =>
-                    ["GKP", "DEF", "MID", "FWD"][p.element_type - 1] === "DEF",
-                  ) + index
-                ],
-              )
-            }
-          >
-            {selectedPlayers[
-              selectedPlayers.findIndex((p) =>
-                ["GKP", "DEF", "MID", "FWD"][p.element_type - 1] === "DEF",
-              ) + index
-            ]?.first_name || ""}
-          </div>
-        ))}
+        <div className="player-row">
+          {Array.from({ length: getPositionCount(2) }).map((_, index) => (
+            <div key={index} className="player-slot">
+              {starters.filter((p) => p.element_type === 2)[index]
+                ?.second_name || ""}
+            </div>
+          ))}
+        </div>
 
         {/* Midfielders */}
-        {Array.from({ length: 4 }).map((_, index) => (
-          <div
-            key={index}
-            className="player-slot"
-            onClick={() =>
-              handlePlayerSelect(
-                selectedPlayers[
-                  selectedPlayers.findIndex((p) =>
-                    ["GKP", "DEF", "MID", "FWD"][p.element_type - 1] === "MID",
-                  ) + index
-                ],
-              )
-            }
-          >
-            {selectedPlayers[
-              selectedPlayers.findIndex((p) =>
-                ["GKP", "DEF", "MID", "FWD"][p.element_type - 1] === "MID",
-              ) + index
-            ]?.first_name || ""}
-          </div>
-        ))}
+        <div className="player-row">
+          {Array.from({ length: getPositionCount(3) }).map((_, index) => (
+            <div key={index} className="player-slot">
+              {starters.filter((p) => p.element_type === 3)[index]
+                ?.second_name || ""}
+            </div>
+          ))}
+        </div>
 
-        {/* Attackers */}
-        {Array.from({ length: 2 }).map((_, index) => (
-          <div
-            key={index}
-            className="player-slot"
-            onClick={() =>
-              handlePlayerSelect(
-                selectedPlayers[
-                  selectedPlayers.findIndex((p) =>
-                    ["GKP", "DEF", "MID", "FWD"][p.element_type - 1] === "FWD",
-                  ) + index
-                ],
-              )
-            }
-          >
-            {selectedPlayers[
-              selectedPlayers.findIndex((p) =>
-                ["GKP", "DEF", "MID", "FWD"][p.element_type - 1] === "FWD",
-              ) + index
-            ]?.first_name || ""}
-          </div>
-        ))}
+        {/* Forwards */}
+        <div className="player-row">
+          {Array.from({ length: getPositionCount(4) }).map((_, index) => (
+            <div key={index} className="player-slot">
+              {starters.filter((p) => p.element_type === 4)[index]
+                ?.second_name || ""}
+            </div>
+          ))}
+        </div>
 
         {/* Substitutes */}
-        {Array.from({ length: 4 }).map((_, index) => (
-          <div
-            key={index}
-            className="player-slot"
-            onClick={() =>
-              handlePlayerSelect(
-                selectedPlayers[
-                  selectedPlayers.findIndex((p) =>
-                    ["GKP", "DEF", "MID", "FWD"][p.element_type - 1] !== "FWD",
-                  ) + index
-                ],
-              )
-            }
-          >
-            {selectedPlayers[
-              selectedPlayers.findIndex((p) =>
-                ["GKP", "DEF", "MID", "FWD"][p.element_type - 1] !== "FWD",
-              ) + index
-            ]?.first_name || ""}
-          </div>
-        ))}
+        <div className="player-row">
+          {substitutes.map((player, index) => (
+            <div key={index} className="player-slot">
+              {player.second_name}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
