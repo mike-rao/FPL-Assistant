@@ -1,3 +1,7 @@
+.App > h1 {
+  text-align: center;
+}
+
 .columns {
   display: flex;
 }
@@ -8,9 +12,17 @@
   border-right: 1px solid #ccc;
 }
 
+.left-column > h2 {
+  text-align: center;
+}
+
 .middle-column {
   width: 40%;
   padding: 20px;
+}
+
+.middle-column > h2 {
+  text-align: center;
 }
 
 .right-column {
@@ -19,42 +31,6 @@
   border-left: 1px solid #ccc;
 }
 
-.App > h1,
-.left-column > h2,
-.middle-column > h2,
 .right-column > h2 {
   text-align: center;
-}
-
-.player-list {
-  overflow-y: auto;
-}
-
-.player-list > div {
-  cursor: pointer;
-  padding: 5px;
-  margin-bottom: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.player-list > div.selected {
-  background-color: lightblue;
-}
-
-.formation {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-}
-
-.player-slot {
-  width: 100px;
-  height: 100px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
 }

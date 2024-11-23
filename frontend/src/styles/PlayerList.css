@@ -1,0 +1,15 @@
+.player-list {
+  overflow-y: auto;
+}
+
+.player-list > div {
+  cursor: pointer;
+  padding: 5px;
+  margin-bottom: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.player-list > div.selected {
+  background-color: lightblue;
+}
