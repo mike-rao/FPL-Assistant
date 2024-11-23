@@ -1,24 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../styles/TeamFormation.css";
 
 function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
-  const handlePlayerSelect = (player) => {
-    if (selectedPlayers.find((p) => p.id === player.id)) {
-      setSelectedPlayers(selectedPlayers.filter((p) => p.id !== player.id));
-    }
-  };
-
   const getPositionCount = (position, includeSubs = false) => {
     const players = includeSubs ? selectedPlayers : selectedPlayers.slice(0, 11);
     return players.filter((p) => p.element_type === position).length;
   };
-
+  
   const starters = selectedPlayers.slice(0, 11);
   const substitutes = selectedPlayers.slice(11).sort((a, b) => {
     // Sort substitutes, goalkeepers first
     if (a.element_type === 1 && b.element_type !== 1) return -1;
     if (a.element_type !== 1 && b.element_type === 1) return 1;
-    return 0; 
+    return 0;
   });
 
   return (

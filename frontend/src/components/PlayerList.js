@@ -22,6 +22,17 @@ function PlayerList({ playerData, selectedPlayers, setSelectedPlayers }) {
       (p) => ["GKP", "DEF", "MID", "FWD"][p.element_type - 1] === position,
     ).length;
 
+    if (player.element_type === 1) {
+        const startingGoalkeeper = selectedPlayers
+          .slice(0, 11)
+          .find((p) => p.element_type === 1);
+    
+        if (startingGoalkeeper && selectedPlayers.length < 11) {
+          alert("Complete starting lineup before adding backup goalkeeper");
+          return;
+        }
+      }
+
     if (currentCount < positionCounts[position]) {
       setSelectedPlayers([...selectedPlayers, player]);
     } else {
