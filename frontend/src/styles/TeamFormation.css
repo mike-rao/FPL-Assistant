@@ -3,6 +3,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-image: url('../../public/images/soccer-field.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 33vw;
   }
 
   .header { /* Styles for the header div */
@@ -18,8 +23,7 @@
     display: flex;
     justify-content: space-between;
     padding-right: 5%;
-    padding-top: 1%;
-    padding-bottom: 1%;
+    padding-bottom: 2%;
   }
   
   .budget { /* Styles for the budget text */
@@ -33,6 +37,10 @@
     width: 15%;
     min-width: 50px;
   }
+
+  .player-row:first-child {
+    margin-top: 40px;
+  }
   
   .player-row {
     display: flex;
@@ -45,8 +53,8 @@
   }
   
   .player-slot {
-    width: 100px;
-    height: 100px;
+    width: 5vw;
+    height: 5vw;
     border: 1px solid #ccc;
     border-radius: 10px;
     display: flex;
@@ -54,8 +62,10 @@
     text-align: center;
     justify-content: center;
     cursor: pointer;
+    background-color: white;
+    font-size: 0.9vw;
   }
   
-  .player-row:last-child .player-slot { /* Target slots in the last row */
-    background-color: lightgray; /* Add gray fill to substitutes */
+  .player-row:last-child .player-slot { 
+    background-color: rgb(175, 175, 175);
   }
