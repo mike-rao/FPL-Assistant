@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../styles/PlayerList.css";
+import Swal from 'sweetalert2';
 
 function PlayerList({ playerData, selectedPlayers, setSelectedPlayers }) {
   const [filter, setFilter] = useState("All players");
@@ -21,6 +22,7 @@ function PlayerList({ playerData, selectedPlayers, setSelectedPlayers }) {
     const currentCount = selectedPlayers.filter(
       (p) => ["GKP", "DEF", "MID", "FWD"][p.element_type - 1] === position,
     ).length;
+    const totalCount = selectedPlayers.length;
 
     if (player.element_type === 1) {
         const startingGoalkeeper = selectedPlayers
@@ -28,15 +30,30 @@ function PlayerList({ playerData, selectedPlayers, setSelectedPlayers }) {
           .find((p) => p.element_type === 1);
     
         if (startingGoalkeeper && selectedPlayers.length < 11) {
-          alert("Complete starting lineup before adding backup goalkeeper");
+            Swal.fire({
+                text: "Complete starting lineup before adding backup goalkeeper",
+                icon: 'warning',
+                confirmButtonText: 'OK'
+              });
           return;
         }
       }
-
-    if (currentCount < positionCounts[position]) {
+    
+    if (totalCount === 15) {
+        Swal.fire({
+            text: 'You already have the maximum number of players',
+            icon: 'warning',
+            confirmButtonText: 'OK'
+          });
+    }
+    else if (currentCount < positionCounts[position]) {
       setSelectedPlayers([...selectedPlayers, player]);
     } else {
-      alert(`You already have the maximum number of ${position}s`);
+        Swal.fire({
+            text: `You already have the maximum number of ${position}s`,
+            icon: 'warning',
+            confirmButtonText: 'OK'
+          });
     }
   };
 

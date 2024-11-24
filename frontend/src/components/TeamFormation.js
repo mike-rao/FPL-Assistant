@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "../styles/TeamFormation.css";
 
 function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
