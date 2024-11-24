@@ -6,6 +6,10 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
     const players = includeSubs ? selectedPlayers : selectedPlayers.slice(0, 11);
     return players.filter((p) => p.element_type === position).length;
   };
+
+  const handleClearTeam = () => {
+    setSelectedPlayers([]);
+  };
   
   const starters = selectedPlayers.slice(0, 11);
   const substitutes = selectedPlayers.slice(11).sort((a, b) => {
@@ -15,9 +19,19 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
     return 0;
   });
 
+  const totalCost = selectedPlayers.reduce((sum, player) => sum + player.now_cost, 0);
+
   return (
     <div className="middle-column">
-      <h2>Team Formation</h2>
+      <div className="header">
+        <div className="title">
+          <h2>Team Formation</h2>
+        </div>
+        <div className="budget-container">
+          <span className="budget">Budget: £{totalCost.toFixed(1)}m</span> 
+          <button className="clear-button" onClick={handleClearTeam}>Clear</button>
+        </div>
+      </div>
       <div className="formation">
         {/* Goalkeeper */}
         <div className="player-row">
