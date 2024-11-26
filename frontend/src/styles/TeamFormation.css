@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-image: url('../../public/images/soccer-field.png');
+    background-image: url('../images/soccer-field.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -34,7 +34,7 @@
 
   .buttons-container { /* New container for the buttons */
     display: flex;
-    gap: 10px; /* Add some space between the buttons */
+    gap: 0.5vw; /* Add some space between the buttons */
     margin-left: auto; /* Push the buttons to the right */
   }
 
@@ -51,17 +51,17 @@
   }
 
   .player-row:first-child {
-    margin-top: 40px;
+    margin-top: 2vw;
   }
   
   .player-row {
     display: flex;
-    gap: 10px;
-    margin-bottom: 10px; 
+    gap: 0.5vw;
+    margin-bottom: 0.5vw; 
   }
   
   .player-row:last-child { /* Target the last row (substitutes) */
-    margin-top: 30px; /* Add a bigger gap above the substitutes */
+    margin-top: 2vw; /* Add a bigger gap above the substitutes */
   }
 
   .middle-column:not(.pick-team-mode) .player-row:last-child {
@@ -71,15 +71,17 @@
   .player-slot {
     width: 5vw;
     height: 5vw;
-    border: 1px solid #ccc;
+    border: 0.2vw solid #ccc;
     border-radius: 10px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     text-align: center;
     justify-content: center;
     cursor: pointer;
     background-color: white;
     font-size: 0.9vw;
+    opacity: 1;
   }
   
   .player-row:last-child .player-slot { 
@@ -89,3 +91,29 @@
   .middle-column:not(.pick-team-mode) .player-row:last-child .player-slot {
     background-color: white; /* Reset background color in Team Formation mode */
   }
+
+  .sub-icon {
+    align-self:flex-start;
+    width: 1vw; /* Adjust size as needed */
+    height: 1vw;
+    cursor: pointer;
+  }
+
+  .player-slot.active { /* Target .player-slot within active container */
+    border-color: red; /* Change border color to blue */
+  }
+
+  .player-slot.eligible { 
+    opacity: 1;
+    border-color: yellow; 
+  }
+
+  .player-slot.disabled {
+    opacity: 0.5;
+    pointer-events: none; /* Prevent interaction */
+  }
+
+  .player-name {
+    cursor: pointer;
+  }
+  
