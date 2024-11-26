@@ -150,6 +150,36 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
 
   const totalCost = selectedPlayers.reduce((sum, player) => sum + player.price, 0);
 
+  const PlayerRow = ({ position, maxPlayers }) => {
+    const players = selectedPlayers.filter((p) => p.position === position);
+    return (
+      <div className="player-row">
+        {Array.from({ length: maxPlayers }).map((_, index) => {
+          const player = players[index];
+          return (
+            <div
+              key={index}
+              className={`player-slot ${getPlayerClass(player)}`}
+              onClick={() =>
+                activePlayer && player && handlePlayerSwap(activePlayer, player)
+              }
+            >
+              {isPickTeamMode && player && (
+                <img
+                  src={substitutionIcon}
+                  alt="Sub"
+                  className="sub-icon"
+                  onClick={() => handleSubstitution(player)}
+                />
+              )}
+              <span className="player-name">{player?.last_name || ""}</span>
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
   return (
     <div className={`middle-column ${isPickTeamMode ? 'pick-team-mode' : ''}`}>
       <div className="header">
@@ -177,127 +207,10 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
         </div>
       </div>
       <div className="formation">
-        {/* Goalkeeper */}
-        <div className="player-row">
-            {Array.from({ length: isPickTeamMode ? getPositionCount(1) : 2 }).map((_, index) => {
-                const player = selectedPlayers.filter((p) => p.position === 1)[index];
-                return (
-                <div
-                    key={index}
-                    className={`player-slot ${getPlayerClass(player)}`}
-                >
-                    {isPickTeamMode && (
-                    <img
-                        src={substitutionIcon}
-                        alt="Sub"
-                        className="sub-icon"
-                        onClick={() => handleSubstitution(player)}
-                    />
-                    )}
-                    <span
-                    className="player-name"
-                    onClick={() =>
-                        activePlayer && handlePlayerSwap(activePlayer, player)
-                    }
-                    >
-                    {player?.last_name || ""}
-                    </span>
-                </div>
-                );
-            })}
-        </div>
-
-        {/* Defenders */}
-        <div className="player-row">
-            {Array.from({ length: isPickTeamMode ? getPositionCount(2) : 5 }).map((_, index) => {
-                const player = selectedPlayers.filter((p) => p.position === 2)[index];
-                return (
-                <div
-                    key={index}
-                    className={`player-slot ${getPlayerClass(player)}`}
-                >
-                    {isPickTeamMode && (
-                    <img
-                        src={substitutionIcon}
-                        alt="Sub"
-                        className="sub-icon"
-                        onClick={() => handleSubstitution(player)}
-                    />
-                    )}
-                    <span
-                    className="player-name"
-                    onClick={() =>
-                        activePlayer && handlePlayerSwap(activePlayer, player)
-                    }
-                    >
-                    {player?.last_name || ""}
-                    </span>
-                </div>
-                );
-            })}
-        </div>
-
-        {/* Midfielders */}
-        <div className="player-row">
-            {Array.from({ length: isPickTeamMode ? getPositionCount(3) : 5 }).map((_, index) => {
-                const player = selectedPlayers.filter((p) => p.position === 3)[index];
-                return (
-                <div
-                    key={index}
-                    className={`player-slot ${getPlayerClass(player)}`}
-                >
-                    {isPickTeamMode && (
-                    <img
-                        src={substitutionIcon}
-                        alt="Sub"
-                        className="sub-icon"
-                        onClick={() => handleSubstitution(player)}
-                    />
-                    )}
-                    <span
-                    className="player-name"
-                    onClick={() =>
-                        activePlayer && handlePlayerSwap(activePlayer, player)
-                    }
-                    >
-                    {player?.last_name || ""}
-                    </span>
-                </div>
-                );
-            })}
-        </div>
-
-        {/* Forwards */}
-        <div className="player-row">
-            {Array.from({ length: isPickTeamMode ? getPositionCount(4) : 3 }).map((_, index) => {
-                const player = selectedPlayers.filter((p) => p.position === 4)[index];
-                return (
-                <div
-                    key={index}
-                    className={`player-slot ${getPlayerClass(player)}`}
-                >
-                    {isPickTeamMode && (
-                    <img
-                        src={substitutionIcon}
-                        alt="Sub"
-                        className="sub-icon"
-                        onClick={() => handleSubstitution(player)}
-                    />
-                    )}
-                    <span
-                    className="player-name"
-                    onClick={() =>
-                        activePlayer && handlePlayerSwap(activePlayer, player)
-                    }
-                    >
-                    {player?.last_name || ""}
-                    </span>
-                </div>
-                );
-            })}
-        </div>
-
-        {/* Substitutes (only in Pick Team mode) */}
+        <PlayerRow position={1} maxPlayers={isPickTeamMode ? getPositionCount(1) : 2} /> {/* GKPs */}
+        <PlayerRow position={2} maxPlayers={isPickTeamMode ? getPositionCount(2) : 5} /> {/* DEFs */}
+        <PlayerRow position={3} maxPlayers={isPickTeamMode ? getPositionCount(3) : 5} /> {/* MIDs */}
+        <PlayerRow position={4} maxPlayers={isPickTeamMode ? getPositionCount(4) : 3} /> {/* FWDs */}
         {isPickTeamMode && (
             <div className="player-row substitutes-row">
                 {substitutes.map((player, index) => (
