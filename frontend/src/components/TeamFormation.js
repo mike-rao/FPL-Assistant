@@ -12,6 +12,7 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
   const handleClearTeam = () => {
     setSelectedPlayers([]);
     setIsPickTeamMode(false); // Reset to Team Formation mode
+    setPreviousFormation({ GKP: 1, DEF: 4, MID: 4, FWD: 2 });
   };
 
   useEffect(() => {
