@@ -1,5 +1,5 @@
 // frontend/src/components/TeamFormation.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/TeamFormation.css";
 import Swal from 'sweetalert2';
 import substitutionIcon from "../images/substitution.png";
@@ -7,14 +7,16 @@ import substitutionIcon from "../images/substitution.png";
 function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
   const [isPickTeamMode, setIsPickTeamMode] = useState(false);
   const [activePlayer, setActivePlayer] = useState(null);
+  const [previousFormation, setPreviousFormation] = useState(null);
 
   const handleClearTeam = () => {
     setSelectedPlayers([]);
     setIsPickTeamMode(false); // Reset to Team Formation mode
   };
 
-  const handleSetTeam = () => {
-    if (selectedPlayers.length === 15) {
+  useEffect(() => {
+    if (isPickTeamMode) {
+      // Store the formation when switching to "Pick Team" mode
       const startersCount = selectedPlayers.slice(0, 11).reduce(
         (counts, player) => {
           const positionName = ["GKP", "DEF", "MID", "FWD"][player.position - 1];
@@ -23,19 +25,34 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
         },
         { GKP: 0, DEF: 0, MID: 0, FWD: 0 }
       );
-      const isValidFormation =
-        startersCount.GKP === 1 && // Exactly 1 goalkeeper
-        startersCount.DEF >= 3 && // At least 3 defenders
-        startersCount.DEF + startersCount.MID + startersCount.FWD === 10; // Valid field player total
-      if (!isValidFormation) {
-        Swal.fire({
-          text: "Your current formation is invalid. Please adjust your team before toggling modes.",
-          icon: "warning",
-          confirmButtonText: "OK",
-        });
-        return;
+      setPreviousFormation(startersCount);
+    }
+  }, [isPickTeamMode, selectedPlayers]); // Run effect when mode or players change
+
+  const handleSetTeam = () => {
+    if (selectedPlayers.length === 15) {
+      // If no previous formation, default to 4-4-2
+      const formation = previousFormation || { GKP: 1, DEF: 4, MID: 4, FWD: 2 };
+      const sortedPlayers = [];
+      let remainingPlayers = [...selectedPlayers];
+      // Iterate through positions and add starters based on formation
+      for (const position of [1, 2, 3, 4]) {
+        const positionPlayers = remainingPlayers.filter(
+          (p) => p.position === position
+        );
+        sortedPlayers.push(
+          ...positionPlayers.slice(
+            0,
+            formation[["GKP", "DEF", "MID", "FWD"][position - 1]]
+          )
+        );
+        remainingPlayers = remainingPlayers.filter(
+          (p) => !sortedPlayers.includes(p)
+        );
       }
-      setIsPickTeamMode(true); // Switch to Pick Team mode without re-sorting players
+      sortedPlayers.push(...remainingPlayers); // Add remaining as subs
+      setSelectedPlayers(sortedPlayers);
+      setIsPickTeamMode(true);
     } else {
       Swal.fire({
         text: "You need to pick 15 players",
