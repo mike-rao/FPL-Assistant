@@ -23,21 +23,6 @@ function PlayerList({ playerData, selectedPlayers, setSelectedPlayers }) {
       (p) => ["GKP", "DEF", "MID", "FWD"][p.position - 1] === position,
     ).length;
     const totalCount = selectedPlayers.length;
-
-    if (player.position === 1) {
-        const startingGoalkeeper = selectedPlayers
-          .slice(0, 11)
-          .find((p) => p.position === 1);
-    
-        if (startingGoalkeeper && selectedPlayers.length < 11) {
-            Swal.fire({
-                text: "Complete starting lineup before adding backup goalkeeper",
-                icon: 'warning',
-                confirmButtonText: 'OK'
-              });
-          return;
-        }
-      }
     
     if (totalCount === 15) {
         Swal.fire({
