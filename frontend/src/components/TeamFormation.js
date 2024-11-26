@@ -83,20 +83,26 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
   };
 
   const isEligibleForSubstitution = (player) => {
-    if (!activePlayer) return false;
-  
-    if (activePlayer.id === player.id) return false; // Same player
-    if (activePlayer.position === 1) {
-      return player.position === 1; // GK can only swap with GK
+    if (!activePlayer) return false; // No active player, no substitutions possible
+    if (activePlayer.id === player.id) return false; // Same player cannot swap with itself
+    // Goalkeeper substitution logic: GK can only swap with another GK
+    if (activePlayer.position === 1 || player.position === 1) {
+      return activePlayer.position === 1 && player.position === 1;
     }
-    if (player.position === 1) {
-      return false; // Field players can't swap with GK
+    // Determine if players are starters or substitutes
+    const activePlayerIsStarter = starters.includes(activePlayer);
+    const targetPlayerIsStarter = starters.includes(player);
+    const activePlayerIsSubstitute = substitutes.includes(activePlayer);
+    // Allow starters to swap with other starters of the same position
+    if (activePlayerIsStarter && targetPlayerIsStarter && activePlayer.position === player.position) {
+      return true;
     }
-    if (activePlayer.position === 2) {
-      if (player.position === 2) return true; // Defender-to-defender
-      return getPositionCount(2) > 3; // Maintain 3 defenders
+    // Allow substitutes to swap with starters or substitutes of different positions (except GK)
+    if (activePlayerIsSubstitute && player.position !== 1) {
+      return true;
     }
-    return true; // Default: Field players can swap
+    // Default logic: Allow swapping only for the same position
+    return activePlayer.position === player.position;
   };
 
   const getPlayerClass = (player) => {
