@@ -15,21 +15,27 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
 
   const handleSetTeam = () => {
     if (selectedPlayers.length === 15) {
-      const positionCounts = { GKP: 1, DEF: 4, MID: 4, FWD: 2 }; // Starters count
-      const sortedPlayers = [];
-      let remainingPlayers = [...selectedPlayers];
-
-      // Iterate through positions and add starters, then subs
-      for (const position of [1, 2, 3, 4]) { 
-        const positionPlayers = remainingPlayers.filter(p => p.position === position);
-        sortedPlayers.push(...positionPlayers.slice(0, positionCounts[["GKP", "DEF", "MID", "FWD"][position - 1]]));
-        remainingPlayers = remainingPlayers.filter(p => !sortedPlayers.includes(p));
+      const startersCount = selectedPlayers.slice(0, 11).reduce(
+        (counts, player) => {
+          const positionName = ["GKP", "DEF", "MID", "FWD"][player.position - 1];
+          counts[positionName]++;
+          return counts;
+        },
+        { GKP: 0, DEF: 0, MID: 0, FWD: 0 }
+      );
+      const isValidFormation =
+        startersCount.GKP === 1 && // Exactly 1 goalkeeper
+        startersCount.DEF >= 3 && // At least 3 defenders
+        startersCount.DEF + startersCount.MID + startersCount.FWD === 10; // Valid field player total
+      if (!isValidFormation) {
+        Swal.fire({
+          text: "Your current formation is invalid. Please adjust your team before toggling modes.",
+          icon: "warning",
+          confirmButtonText: "OK",
+        });
+        return;
       }
-
-      sortedPlayers.push(...remainingPlayers); // Add the remaining players as subs
-
-      setSelectedPlayers(sortedPlayers);
-      setIsPickTeamMode(true);
+      setIsPickTeamMode(true); // Switch to Pick Team mode without re-sorting players
     } else {
       Swal.fire({
         text: "You need to pick 15 players",
@@ -41,6 +47,7 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
 
   const handleToggleMode = () => {
     setIsPickTeamMode(!isPickTeamMode); // Toggle between modes
+    setActivePlayer(null); // Reset active player to clear substitution state
   };
 
   const handleSubstitution = (player) => {
@@ -54,32 +61,18 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
   };
 
   const handlePlayerSwap = (player1, player2) => {
-    // Allow swapping between any players
-    const canSwap =
-      (player1.position === player2.position) || // Same position
-      (player1.position !== 1 && player2.position !== 1 && getPositionCount(2) > 3) || // Field player swaps maintaining 3 defenders
-      (player1.position === 2 && player2.position === 2); // Defender-to-defender swap
-  
-    if (canSwap) {
-      const updatedPlayers = [...selectedPlayers];
-      const index1 = updatedPlayers.findIndex((p) => p.id === player1.id);
-      const index2 = updatedPlayers.findIndex((p) => p.id === player2.id);
-  
-      // Perform the swap
-      [updatedPlayers[index1], updatedPlayers[index2]] = [
+    const updatedPlayers = [...selectedPlayers];
+    const index1 = updatedPlayers.findIndex((p) => p.id === player1.id);
+    const index2 = updatedPlayers.findIndex((p) => p.id === player2.id);
+
+    // Perform the swap
+    [updatedPlayers[index1], updatedPlayers[index2]] = [
         updatedPlayers[index2],
         updatedPlayers[index1],
-      ];
-  
-      setSelectedPlayers(updatedPlayers);
-      setActivePlayer(null); // Reset active player
-    } else {
-      Swal.fire({
-        text: "Invalid substitution. Ensure you maintain at least 3 defenders.",
-        icon: "warning",
-        confirmButtonText: "OK",
-      });
-    }
+    ];
+
+    setSelectedPlayers(updatedPlayers);
+    setActivePlayer(null); // Reset active player
   };
 
   const isEligibleForSubstitution = (player) => {
@@ -93,6 +86,19 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
     const activePlayerIsStarter = starters.includes(activePlayer);
     const targetPlayerIsStarter = starters.includes(player);
     const activePlayerIsSubstitute = substitutes.includes(activePlayer);
+    // Get the current number of starting defenders
+    const currentDefendersCount = getPositionCount(2);
+    // Rule: Restrict swaps when only 3 starting defenders remain
+    if (currentDefendersCount === 3) {
+      if (activePlayerIsStarter && activePlayer.position === 2) {
+        // Starting defenders can only swap with other starting defenders
+        return targetPlayerIsStarter && player.position === 2;
+      }
+      if (activePlayerIsSubstitute) {
+        // Substitutes cannot swap with starting defenders
+        return player.position !== 2 || !targetPlayerIsStarter;
+      }
+    }
     // Allow starters to swap with other starters of the same position
     if (activePlayerIsStarter && targetPlayerIsStarter && activePlayer.position === player.position) {
       return true;
