@@ -18,16 +18,16 @@ function PlayerList({ playerData, selectedPlayers, setSelectedPlayers }) {
       MID: 5,
       FWD: 3,
     };
-    const position = ["GKP", "DEF", "MID", "FWD"][player.element_type - 1];
+    const position = ["GKP", "DEF", "MID", "FWD"][player.position - 1];
     const currentCount = selectedPlayers.filter(
-      (p) => ["GKP", "DEF", "MID", "FWD"][p.element_type - 1] === position,
+      (p) => ["GKP", "DEF", "MID", "FWD"][p.position - 1] === position,
     ).length;
     const totalCount = selectedPlayers.length;
 
-    if (player.element_type === 1) {
+    if (player.position === 1) {
         const startingGoalkeeper = selectedPlayers
           .slice(0, 11)
-          .find((p) => p.element_type === 1);
+          .find((p) => p.position === 1);
     
         if (startingGoalkeeper && selectedPlayers.length < 11) {
             Swal.fire({
@@ -67,13 +67,13 @@ function PlayerList({ playerData, selectedPlayers, setSelectedPlayers }) {
   };
 
   const filteredPlayers = playerData.filter((player) => {
-    const position = ["GKP", "DEF", "MID", "FWD"][player.element_type - 1];
+    const position = ["GKP", "DEF", "MID", "FWD"][player.position - 1];
     if (filter !== "All players" && filter !== position) {
       return false;
     }
     if (
       searchTerm &&
-      !`${player.first_name} ${player.second_name}`
+      !`${player.first_name} ${player.last_name}`
         .toLowerCase()
         .includes(searchTerm.toLowerCase())
     ) {
@@ -109,7 +109,7 @@ function PlayerList({ playerData, selectedPlayers, setSelectedPlayers }) {
               selectedPlayers.find((p) => p.id === player.id) ? "selected" : ""
             }
           >
-            {player.first_name} {player.second_name}
+            {player.first_name} {player.last_name}
           </div>
         ))}
       </div>

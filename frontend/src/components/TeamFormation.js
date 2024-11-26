@@ -4,7 +4,7 @@ import "../styles/TeamFormation.css";
 function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
   const getPositionCount = (position, includeSubs = false) => {
     const players = includeSubs ? selectedPlayers : selectedPlayers.slice(0, 11);
-    return players.filter((p) => p.element_type === position).length;
+    return players.filter((p) => p.position === position).length;
   };
 
   const handleClearTeam = () => {
@@ -14,12 +14,12 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
   const starters = selectedPlayers.slice(0, 11);
   const substitutes = selectedPlayers.slice(11).sort((a, b) => {
     // Sort substitutes, goalkeepers first
-    if (a.element_type === 1 && b.element_type !== 1) return -1;
-    if (a.element_type !== 1 && b.element_type === 1) return 1;
+    if (a.position === 1 && b.position !== 1) return -1;
+    if (a.position !== 1 && b.position === 1) return 1;
     return 0;
   });
 
-  const totalCost = selectedPlayers.reduce((sum, player) => sum + player.now_cost, 0);
+  const totalCost = selectedPlayers.reduce((sum, player) => sum + player.price, 0);
 
   return (
     <div className="middle-column">
@@ -37,8 +37,8 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
         <div className="player-row">
           {Array.from({ length: getPositionCount(1) }).map((_, index) => (
             <div key={index} className="player-slot">
-              {starters.filter((p) => p.element_type === 1)[index]
-                ?.second_name || ""}
+              {starters.filter((p) => p.position === 1)[index]
+                ?.last_name || ""}
             </div>
           ))}
         </div>
@@ -47,8 +47,8 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
         <div className="player-row">
           {Array.from({ length: getPositionCount(2) }).map((_, index) => (
             <div key={index} className="player-slot">
-              {starters.filter((p) => p.element_type === 2)[index]
-                ?.second_name || ""}
+              {starters.filter((p) => p.position === 2)[index]
+                ?.last_name || ""}
             </div>
           ))}
         </div>
@@ -57,8 +57,8 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
         <div className="player-row">
           {Array.from({ length: getPositionCount(3) }).map((_, index) => (
             <div key={index} className="player-slot">
-              {starters.filter((p) => p.element_type === 3)[index]
-                ?.second_name || ""}
+              {starters.filter((p) => p.position === 3)[index]
+                ?.last_name || ""}
             </div>
           ))}
         </div>
@@ -67,8 +67,8 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
         <div className="player-row">
           {Array.from({ length: getPositionCount(4) }).map((_, index) => (
             <div key={index} className="player-slot">
-              {starters.filter((p) => p.element_type === 4)[index]
-                ?.second_name || ""}
+              {starters.filter((p) => p.position === 4)[index]
+                ?.last_name || ""}
             </div>
           ))}
         </div>
@@ -77,7 +77,7 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
         <div className="player-row">
           {substitutes.map((player, index) => (
             <div key={index} className="player-slot">
-              {player.second_name}
+              {player.last_name}
             </div>
           ))}
         </div>

@@ -18,12 +18,12 @@ function App() {
         const data = await response.json();
         const updatedData = data.map((player) => ({
           ...player,
-          element_type:
-            player.element_type === "FWD"
+          position:
+            player.position === "FWD"
               ? 4
-              : player.element_type === "MID"
+              : player.position === "MID"
               ? 3
-              : player.element_type === "DEF"
+              : player.position === "DEF"
               ? 2
               : 1, // GKP
         }));
