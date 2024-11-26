@@ -117,3 +117,11 @@
     cursor: pointer;
   }
   
+  .responsive-popup {
+    max-width: 90vw;
+    overflow: hidden;
+  }
+  
+  .responsive-popup div p {
+    margin: 0;
+  }

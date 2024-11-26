@@ -160,16 +160,25 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
             <div
               key={index}
               className={`player-slot ${getPlayerClass(player)}`}
-              onClick={() =>
-                activePlayer && player && handlePlayerSwap(activePlayer, player)
-              }
+              onClick={() => {
+                if (player) {
+                  if (!isPickTeamMode || (isPickTeamMode && !activePlayer)) {
+                    showPlayerInfo(player); // Show player info
+                  } else if (isPickTeamMode && activePlayer) {
+                    handlePlayerSwap(activePlayer, player); // Swap players
+                  }
+                }
+              }}
             >
               {isPickTeamMode && player && (
                 <img
                   src={substitutionIcon}
                   alt="Sub"
                   className="sub-icon"
-                  onClick={() => handleSubstitution(player)}
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent triggering slot click
+                    handleSubstitution(player);
+                  }}
                 />
               )}
               <span className="player-name">{player?.last_name || ""}</span>
@@ -178,7 +187,60 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
         })}
       </div>
     );
-  };
+  };  
+
+  const showPlayerInfo = (player) => {
+    Swal.fire({
+      html: `
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+          <!-- Vertical Stack: Position, Name, Team -->
+          <div style="text-align: center;">
+            <p style="margin: 0; font-size: 1.2em;">
+              ${["GKP", "DEF", "MID", "FWD"][player.position - 1]}
+            </p>
+            <p style="margin: 0; font-size: 1.5em; font-weight: bold;">${player.first_name} ${player.last_name}</p>
+            <p style="margin: 0; font-size: 1em; color: gray;">${player.team}</p>
+          </div>
+          
+          <!-- Horizontal Stack: Other Stats -->
+          <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; text-align: center;">
+            <div>
+              <p style="margin: 0; font-weight: bold;">Price</p>
+              <p style="margin: 0;">£${player.price.toFixed(1)}m</p>
+            </div>
+            <div style="border-left: 1px solid #ddd; padding-left: 1rem;">
+              <p style="margin: 0; font-weight: bold;">Form</p>
+              <p style="margin: 0;">${player.form}</p>
+            </div>
+            <div style="border-left: 1px solid #ddd; padding-left: 1rem;">
+              <p style="margin: 0; font-weight: bold;">Pts/Match</p>
+              <p style="margin: 0;">${player.pts_per_match}</p>
+            </div>
+            <div style="border-left: 1px solid #ddd; padding-left: 1rem;">
+              <p style="margin: 0; font-weight: bold;">Total Points</p>
+              <p style="margin: 0;">${player.total_pts}</p>
+            </div>
+            <div style="border-left: 1px solid #ddd; padding-left: 1rem;">
+              <p style="margin: 0; font-weight: bold;">Bonus</p>
+              <p style="margin: 0;">${player.total_bonus}</p>
+            </div>
+            <div style="border-left: 1px solid #ddd; padding-left: 1rem;">
+              <p style="margin: 0; font-weight: bold;">ICT Index</p>
+              <p style="margin: 0;">${player.ict_index}</p>
+            </div>
+            <div style="border-left: 1px solid #ddd; padding-left: 1rem;">
+              <p style="margin: 0; font-weight: bold;">TSB%</p>
+              <p style="margin: 0;">${player["tsb%"]}%</p>
+            </div>
+          </div>
+        </div>
+      `,
+      showConfirmButton: true,
+      confirmButtonText: "Close",
+      width: 800, // Adjust the popup width
+      padding: "1.5rem", // Add padding for spacing
+    });
+  };  
 
   return (
     <div className={`middle-column ${isPickTeamMode ? 'pick-team-mode' : ''}`}>
