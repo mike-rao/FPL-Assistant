@@ -170,18 +170,24 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
                 }
               }}
             >
-              {isPickTeamMode && player && (
-                <img
-                  src={substitutionIcon}
-                  alt="Sub"
-                  className="sub-icon"
-                  onClick={(e) => {
-                    e.stopPropagation(); // Prevent triggering slot click
-                    handleSubstitution(player);
-                  }}
-                />
-              )}
-              <span className="player-name">{player?.last_name || ""}</span>
+              <div className="player-slot-top">
+                {isPickTeamMode && player && (
+                    <img
+                    src={substitutionIcon}
+                    alt="Sub"
+                    className="sub-icon"
+                    onClick={(e) => {
+                        e.stopPropagation(); // Prevent triggering slot click
+                        handleSubstitution(player);
+                    }}
+                    />
+                )}
+                {player?.price && ( // Conditionally render the div
+                  <div className="player-price">£{player.price}m</div>
+                )}
+              </div>
+              <span>{player?.last_name || ""}</span>
+              <span className = "player-team">{player?.team}</span>
             </div>
           );
         })}
@@ -280,20 +286,26 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
                     key={index}
                     className={`player-slot ${getPlayerClass(player)}`}
                 >
-                    {isPickTeamMode && (
-                    <img
-                        src={substitutionIcon}
-                        alt="Sub"
-                        className="sub-icon"
-                        onClick={() => handleSubstitution(player)}
-                    />
-                    )}
-                    <span
-                    className="player-name"
-                    onClick={() => activePlayer && handlePlayerSwap(activePlayer, player)}
-                    >
+                    <div className="player-slot-top">
+                        {isPickTeamMode && player && (
+                            <img
+                            src={substitutionIcon}
+                            alt="Sub"
+                            className="sub-icon"
+                            onClick={(e) => {
+                                e.stopPropagation(); // Prevent triggering slot click
+                                handleSubstitution(player);
+                            }}
+                            />
+                        )}
+                        {player?.price && ( // Conditionally render the div
+                        <div className="player-price">£{player.price}m</div>
+                        )}
+                    </div>
+                    <span onClick={() => activePlayer && handlePlayerSwap(activePlayer, player)}>
                     {player?.last_name || ""}
                     </span>
+                    <span className = "player-team">{player?.team}</span>
                 </div>
                 ))}
             </div>

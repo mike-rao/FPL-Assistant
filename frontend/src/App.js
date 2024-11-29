@@ -39,7 +39,7 @@ function App() {
   return (
     <div className="App">
       <h1>Fantasy Premier League Assistant</h1>
-
+      <p>Employ a machine learning assistant manager to build the best team, score more points, and defeat your rivals.</p>
       <div className="columns">
         <PlayerList
           playerData={playerData}

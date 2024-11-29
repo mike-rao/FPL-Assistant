@@ -13,3 +13,17 @@
 .player-list > div.selected {
   background-color: lightblue;
 }
+
+.player-filters {
+    padding-bottom: 5px;
+    display: flex;
+}
+
+.filter {
+    margin-right: 0.5vw;
+    padding-right: 1.5vw;
+}
+
+.search {
+    width: 100%;
+}

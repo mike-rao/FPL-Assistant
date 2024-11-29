@@ -70,15 +70,15 @@ function PlayerList({ playerData, selectedPlayers, setSelectedPlayers }) {
   return (
     <div className="left-column">
       <h2>Player Selection</h2>
-      <div>
-        <select value={filter} onChange={handleFilterChange}>
+      <div className = "player-filters">
+        <select className = "filter" value={filter} onChange={handleFilterChange}>
           <option value="All players">All players</option>
           <option value="GKP">Goalkeepers</option>
           <option value="DEF">Defenders</option>
           <option value="MID">Midfielders</option>
           <option value="FWD">Attackers</option>
         </select>
-        <input
+        <input className = "search"
           type="text"
           placeholder="Search by name"
           value={searchTerm}

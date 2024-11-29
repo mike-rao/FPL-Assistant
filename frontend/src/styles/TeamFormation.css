@@ -77,7 +77,9 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    justify-content: center;
+    justify-content: space-between;
+    padding-top: 0.2vw;
+    padding-bottom: 0.1vw;
     cursor: pointer;
     background-color: white;
     font-size: 0.9vw;
@@ -126,7 +128,8 @@
   }
 
   .sub-icon {
-    align-self:flex-start;
+    position: absolute;
+    left: 0.15vw;
     width: 1vw; /* Adjust size as needed */
     height: 1vw;
     cursor: pointer;
@@ -145,10 +148,6 @@
     opacity: 0.5;
     pointer-events: none; /* Prevent interaction */
   }
-
-  .player-name {
-    cursor: pointer;
-  }
   
   .responsive-popup {
     max-width: 90vw;
@@ -157,4 +156,28 @@
   
   .responsive-popup div p {
     margin: 0;
+  }
+
+  .player-team {
+    font-size: 0.5vw;
+  }
+
+  .player-slot span:not(:empty) + span { /* Target only when the first span has content */
+    border-top: 1px solid #ddd;
+    padding-top: 1px;
+    width: 100%; 
+  }
+
+  .player-price {
+    font-size: 0.7vw;
+    flex-grow: 1; /* Allow the price to take up available space */
+    text-align: center;
+  }
+
+  .player-slot-top {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    position: relative;
+    width: 100%; 
   }

@@ -9,6 +9,7 @@
 .left-column {
   width: 30%;
   padding: 20px;
+  padding-top: 0px;
   border-right: 1px solid #ccc;
 }
 
@@ -19,6 +20,7 @@
 .middle-column {
   width: 40%;
   padding: 20px;
+  padding-top: 0px;
 }
 
 .middle-column > h2 {
@@ -28,9 +30,16 @@
 .right-column {
   width: 30%;
   padding: 20px;
+  padding-top: 0px;
   border-left: 1px solid #ccc;
 }
 
 .right-column > h2 {
   text-align: center;
+}
+
+.App > p {
+  font-size: medium;
+  text-align: center;
+  padding-bottom: 1vw;
 }
