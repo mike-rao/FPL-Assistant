@@ -99,33 +99,6 @@
   .player-slot.eligible:hover {
     background-color: #d2d2d2; /* Highlight eligible substitutes */
   }
-  
-  .player-row:last-child .player-slot {
-    background-color: rgb(175, 175, 175); /* Default color for last row */
-    transition: background-color 0.3s ease;
-  }
-
-  .middle-column:not(.pick-team-mode) .player-row:last-child .player-slot {
-    background-color: white; /* Reset background color in Team Formation mode */
-  }
-
-  .middle-column:not(.pick-team-mode) .player-row:last-child .player-slot:hover {
-    background-color: #d2d2d2; /* Add hover effect */
-  }
-
-  .player-row:last-child .player-slot:hover {
-    background-color: #d2d2d2; /* Highlight the bottom row on hover */
-  }
-
-  /* Ensure hover respects eligibility in Pick Team Mode */
-  .middle-column.pick-team-mode .player-row:last-child .player-slot.disabled:hover {
-    background-color: rgb(175, 175, 175); /* Disabled hover reset */
-    cursor: not-allowed; /* Indicate non-interactivity */
-  }
-
-  .middle-column.pick-team-mode .player-row:last-child .player-slot.eligible:hover {
-    background-color: #d2d2d2; /* Ensure hover for eligible slots */
-  }
 
   .sub-icon {
     position: absolute;
@@ -163,7 +136,7 @@
   }
 
   .player-slot span:not(:empty) + span { /* Target only when the first span has content */
-    border-top: 1px solid #ddd;
+    border-top: 1px solid #ccc;
     padding-top: 1px;
     width: 100%; 
   }
@@ -180,4 +153,13 @@
     align-items: center; 
     position: relative;
     width: 100%; 
+  }
+
+  .substitutes-row {
+    background-color: rgba(48, 48, 48, 0.68);
+    border: 0.2vw solid #cccccc48; /* Add a border around the substitutes row */
+    padding: 1vw; /* Add some padding for visual separation */
+    padding-left: 4vw;
+    padding-right: 4vw;
+    border-radius: 10px; /* Optional: Add rounded corners */
   }

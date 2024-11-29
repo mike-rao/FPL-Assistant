@@ -285,6 +285,15 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
                 <div
                     key={index}
                     className={`player-slot ${getPlayerClass(player)}`}
+                    onClick={() => {
+                        if (player) {
+                          if (!isPickTeamMode || (isPickTeamMode && !activePlayer)) {
+                            showPlayerInfo(player); // Show player info
+                          } else if (isPickTeamMode && activePlayer) {
+                            handlePlayerSwap(activePlayer, player); // Swap players
+                          }
+                        }
+                    }}
                 >
                     <div className="player-slot-top">
                         {isPickTeamMode && player && (
