@@ -7,7 +7,7 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    min-height: 33vw;
+    min-height: 48vw;
   }
 
   .header { /* Styles for the header div */
@@ -51,17 +51,17 @@
   }
 
   .player-row:first-child {
-    margin-top: 2vw;
+    margin-top: 3vw;
   }
   
   .player-row {
     display: flex;
-    gap: 0.5vw;
-    margin-bottom: 0.5vw; 
+    gap: 1.7vw;
+    margin-bottom: 1vw; 
   }
   
   .player-row:last-child { /* Target the last row (substitutes) */
-    margin-top: 2vw; /* Add a bigger gap above the substitutes */
+    margin-top: 1.7vw; /* Add a bigger gap above the substitutes */
   }
 
   .middle-column:not(.pick-team-mode) .player-row:last-child {
@@ -70,7 +70,7 @@
   
   .player-slot {
     width: 5vw;
-    height: 5vw;
+    height: 6.5vw;
     border: 0.2vw solid #ccc;
     border-radius: 10px;
     display: flex;
@@ -162,4 +162,8 @@
     padding-left: 4vw;
     padding-right: 4vw;
     border-radius: 10px; /* Optional: Add rounded corners */
+  }
+
+  .player-jersey {
+    width: 4vw;
   }

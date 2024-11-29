@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import "../styles/TeamFormation.css";
 import Swal from 'sweetalert2';
 import substitutionIcon from "../images/substitution.png";
+import unknownJersey from '../images/jerseys/Unknown.png';
+import unknownGoalkeeperJersey from '../images/jerseys/Unknown Goalkeeper.png';
 
 function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
   const [isPickTeamMode, setIsPickTeamMode] = useState(false);
@@ -150,6 +152,29 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
 
   const totalCost = selectedPlayers.reduce((sum, player) => sum + player.price, 0);
 
+  function getJerseyImage(player) {
+    const basePath = "../images/jerseys/";
+    let imagePath;
+    if (player.position === 1) {
+      // Goalkeepers
+      imagePath = `${basePath}${player.team || "Unknown"} Goalkeeper.png`;
+    } else {
+      // Outfield players
+      imagePath = `${basePath}${player.team || "Unknown"}.png`;
+    }
+    try {
+      // Dynamically resolve the image
+      return require(`${imagePath}`).default;
+    } catch (e) {
+      // Default to fallback images
+      if (player.position === 1) {
+        return unknownGoalkeeperJersey;
+      } else {
+        return unknownJersey;
+      }
+    }
+  }
+
   const PlayerRow = ({ position, maxPlayers }) => {
     const players = selectedPlayers.filter((p) => p.position === position);
     return (
@@ -186,6 +211,13 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
                   <div className="player-price">£{player.price}m</div>
                 )}
               </div>
+              {player?.team && (
+                <img 
+                    src={getJerseyImage(player)} 
+                    alt={`${player?.team || "Unknown"} jersey`} 
+                    className="player-jersey" 
+                />
+              )}
               <span>{player?.last_name || ""}</span>
               <span className = "player-team">{player?.team}</span>
             </div>
@@ -311,6 +343,13 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
                         <div className="player-price">£{player.price}m</div>
                         )}
                     </div>
+                    {player?.team && (
+                        <img 
+                            src={getJerseyImage(player)} 
+                            alt={`${player?.team || "Unknown"} jersey`} 
+                            className="player-jersey" 
+                        />
+                    )}
                     <span onClick={() => activePlayer && handlePlayerSwap(activePlayer, player)}>
                     {player?.last_name || ""}
                     </span>
