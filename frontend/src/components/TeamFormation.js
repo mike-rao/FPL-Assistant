@@ -206,7 +206,7 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
                     className="player-jersey" 
                 />
               )}
-              <span>{player?.last_name || ""}</span>
+              <span className="player-name">{player?.last_name || player?.first_name || ""}</span>
               <span className = "player-team">{player?.team}</span>
             </div>
           );
@@ -278,12 +278,12 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
           <span className="budget">Budget: £{totalCost.toFixed(1)}m</span>
           <div className="buttons-container">
           {isPickTeamMode ? (
-            <button className="mode-button" onClick={handleToggleMode}>
+            <button className="team-formation-button" onClick={handleToggleMode}>
               Team Formation
             </button>
           ) : (
             <>
-              <button className="mode-button" onClick={handleSetTeam}>
+              <button className="set-team-button" onClick={handleSetTeam}>
                 Set Team
               </button>
               <button className="clear-button" onClick={handleClearTeam}>
@@ -338,8 +338,8 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
                             className="player-jersey" 
                         />
                     )}
-                    <span onClick={() => activePlayer && handlePlayerSwap(activePlayer, player)}>
-                    {player?.last_name || ""}
+                    <span className="player-name" onClick={() => activePlayer && handlePlayerSwap(activePlayer, player)}>
+                    {player?.last_name || player?.first_name || ""}
                     </span>
                     <span className = "player-team">{player?.team}</span>
                 </div>

@@ -1,45 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap'); /* Import thick, wide font for title */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'); /* Import modern font */
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif; /* Sleek, modern font */
+  background-color: #121212; /* Darker dark gray */
+  color: #e0e0e0; /* Light gray text */
+}
+
 .App > h1 {
   text-align: center;
+  font-family: 'Anton', sans-serif; /* Wide, thick font for the title */
+  font-size: 4rem; /* Larger size to emphasize the gradient */
+  font-weight: 300;
+  margin: 1.5rem 0;
+  background: linear-gradient(135deg, #f39c12, #9b59b6); /* Gradient color */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; /* Makes gradient visible on text */
+  letter-spacing: 0.2rem; /* Adds spacing between characters for better readability */
+  text-transform: uppercase; /* Capitalize the title for dramatic effect */
+  transform: scaleX(1.5); /* Stretch horizontally */
+  font-size: clamp(2rem, 5vw, 5rem); /* Responsive font size */
+  word-wrap: break-word; /* Allow wrapping if the text is too long */
+  max-width: 60%; /* Prevent it from being wider than the container */
+  margin-left: auto; /* Center the text horizontally */
+  margin-right: auto;
 }
 
+.App > p {
+  font-size: 1.2rem;
+  text-align: center;
+  color: #dcdcdc;
+  padding-bottom: 1rem;
+}
+
+/* Layout styling */
 .columns {
   display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  gap: 1rem;
 }
 
+/* Left Column */
 .left-column {
   width: 30%;
   padding: 20px;
-  padding-top: 0px;
-  border-right: 1px solid #ccc;
+  background-color: #1e1e1e; /* Slightly lighter than the background */
+  border-radius: 10px;
 }
 
 .left-column > h2 {
   text-align: center;
+  color: white;
+  background: linear-gradient(90deg, #3295ff, #ff4583);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  padding-bottom: 3%;
 }
 
+/* Middle Column */
 .middle-column {
   width: 40%;
   padding: 20px;
-  padding-top: 0px;
+  background-color: #1e1e1e;
+  border-radius: 10px;
 }
 
-.middle-column > h2 {
-  text-align: center;
-}
-
+/* Right Column */
 .right-column {
   width: 30%;
   padding: 20px;
-  padding-top: 0px;
-  border-left: 1px solid #ccc;
+  background-color: #1e1e1e;
+  border-radius: 10px;
 }
 
 .right-column > h2 {
-  text-align: center;
+  text-align: center;color: white;
+  background: linear-gradient(90deg, #bf34ff, #ff0000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
 }
 
-.App > p {
-  font-size: medium;
-  text-align: center;
-  padding-bottom: 1vw;
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #444;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #1e1e1e;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #888; /* Lighter color when hovered */
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  .columns {
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .left-column, .middle-column, .right-column {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .App > h1 {
+    font-size: 2rem;
+  }
 }

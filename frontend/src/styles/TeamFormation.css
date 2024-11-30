@@ -17,6 +17,11 @@
 
   .title { /* Styles for the title div */
     text-align: center; /* Center the h2 within the title div */
+    color: white;
+    background: linear-gradient(90deg, #ff8800, #61ff4c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.3rem;
   }
 
   .budget-container { /* Styles for the container */
@@ -27,8 +32,9 @@
   }
   
   .budget { /* Styles for the budget text */
+    align-content: space-around;
     font-weight: normal; /* Make it non-bolded */
-    font-size: large;
+    font-size:x-large;
     padding-left: 0%;
   }
 
@@ -41,13 +47,45 @@
   .clear-button {
     align-items: center;
     width: 5vw;
+    height: 1.8vw;
     min-width: 50px;
+    min-height: 30px;
+    background: linear-gradient(90deg, #f39c12, #be7500);
+    color: #1e1e1e;
+    border: 5px;
+    border-color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
-  .mode-button {
+  .team-formation-button, .set-team-button {
     align-items: end;
     width: 6vw;
+    height: 1.8vw;
+    min-width: 165px;
+    min-height: 30px;
+    background: linear-gradient(90deg, #ffcf81, #f39c12);
+    color: #1e1e1e;
+    border: none;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .set-team-button {
+    width: 3vw;
     min-width: 115px;
+  }
+
+  button:hover, a:hover {
+    background: linear-gradient(90deg, #ffa467, #d35400);
+    color: #fff; /* White text for contrast */
+    box-shadow: 0 0 10px 2px #ffa467;
   }
 
   .player-row:first-child {
@@ -56,7 +94,7 @@
   
   .player-row {
     display: flex;
-    gap: 1.7vw;
+    gap: 1.3vw;
     margin-bottom: 1vw; 
   }
   
@@ -77,18 +115,20 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+    color: black;
     justify-content: space-between;
     padding-top: 0.2vw;
     padding-bottom: 0.1vw;
     cursor: pointer;
-    background-color: white;
+    background-color: #ffba4b;
     font-size: 0.9vw;
     opacity: 1;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
   }
 
   .player-slot:hover {
-    background-color: #d2d2d2; /* Slightly darker when hovered */
+    background-color: #ffe8c4; /* Slightly darker when hovered */
+    box-shadow: 0 0 10px 2px #ffa467;
   }
 
   .player-slot.disabled:hover {
@@ -97,7 +137,7 @@
   }
 
   .player-slot.eligible:hover {
-    background-color: #d2d2d2; /* Highlight eligible substitutes */
+    background-color: #ffe8c4; /* Highlight eligible substitutes */
   }
 
   .sub-icon {
@@ -114,7 +154,6 @@
 
   .player-slot.eligible { 
     opacity: 1;
-    border-color: yellow; 
   }
 
   .player-slot.disabled {
@@ -132,7 +171,7 @@
   }
 
   .player-team {
-    font-size: 0.5vw;
+    font-size: 0.6vw;
   }
 
   .player-slot span:not(:empty) + span { /* Target only when the first span has content */
@@ -166,4 +205,13 @@
 
   .player-jersey {
     width: 4vw;
+  }
+
+  .player-name {
+    font-size: 0.8vw; /* Adjust font size as needed */
+    white-space: nowrap;  /* Prevent wrapping */
+    overflow: hidden;     /* Hide text that overflows */
+    text-overflow: ellipsis; /* Add ellipsis if text overflows */
+    max-width: 100%;      /* Ensure the element doesn't exceed its container */
+    display: block;       /* Allow block-level styling */
   }

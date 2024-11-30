@@ -32,6 +32,13 @@ function PlayerList({ playerData, selectedPlayers, setSelectedPlayers }) {
             confirmButtonText: 'OK'
           });
     }
+    else if (currentCount >= positionCounts[position]) {
+        Swal.fire({
+            text: `You already have the maximum number of ${position}s`,
+            icon: 'warning',
+            confirmButtonText: 'OK'
+          });
+    }
     else if (teamCount >= 3) {
         Swal.fire({
             text: `You cannot select more than 3 players from one team`,
@@ -39,14 +46,8 @@ function PlayerList({ playerData, selectedPlayers, setSelectedPlayers }) {
             confirmButtonText: 'OK',
         });
     }
-    else if (currentCount < positionCounts[position]) {
+    else {
       setSelectedPlayers([...selectedPlayers, player]);
-    } else {
-        Swal.fire({
-            text: `You already have the maximum number of ${position}s`,
-            icon: 'warning',
-            confirmButtonText: 'OK'
-          });
     }
   };
 
