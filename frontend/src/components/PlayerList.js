@@ -23,6 +23,7 @@ function PlayerList({ playerData, selectedPlayers, setSelectedPlayers }) {
       (p) => ["GKP", "DEF", "MID", "FWD"][p.position - 1] === position,
     ).length;
     const totalCount = selectedPlayers.length;
+    const teamCount = selectedPlayers.filter((p) => p.team === player.team).length;
     
     if (totalCount === 15) {
         Swal.fire({
@@ -30,6 +31,13 @@ function PlayerList({ playerData, selectedPlayers, setSelectedPlayers }) {
             icon: 'warning',
             confirmButtonText: 'OK'
           });
+    }
+    else if (teamCount >= 3) {
+        Swal.fire({
+            text: `You cannot select more than 3 players from one team`,
+            icon: 'warning',
+            confirmButtonText: 'OK',
+        });
     }
     else if (currentCount < positionCounts[position]) {
       setSelectedPlayers([...selectedPlayers, player]);
