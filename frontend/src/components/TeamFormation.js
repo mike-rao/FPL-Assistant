@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import substitutionIcon from "../images/substitution.png";
 import unknownJersey from '../images/jerseys/Unknown.png';
 import unknownGoalkeeperJersey from '../images/jerseys/Unknown Goalkeeper.png';
+import jerseyImages from '../helpers/jerseyImages';
 
 function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
   const [isPickTeamMode, setIsPickTeamMode] = useState(false);
@@ -152,28 +153,15 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
 
   const totalCost = selectedPlayers.reduce((sum, player) => sum + player.price, 0);
 
-  function getJerseyImage(player) {
-    const basePath = "../images/jerseys/";
-    let imagePath;
+  const getJerseyImage = (player) => {
+    if (!player) return jerseyImages['Unknown']; // Fallback for no player data
+    // Check if the player is a goalkeeper
     if (player.position === 1) {
-      // Goalkeepers
-      imagePath = `${basePath}${player.team || "Unknown"} Goalkeeper.png`;
-    } else {
-      // Outfield players
-      imagePath = `${basePath}${player.team || "Unknown"}.png`;
+      return jerseyImages['Goalkeeper'] || jerseyImages['Unknown Goalkeeper'];
     }
-    try {
-      // Dynamically resolve the image
-      return require(`${imagePath}`).default;
-    } catch (e) {
-      // Default to fallback images
-      if (player.position === 1) {
-        return unknownGoalkeeperJersey;
-      } else {
-        return unknownJersey;
-      }
-    }
-  }
+    // Use team jersey or fallback to 'Unknown'
+    return jerseyImages[player.team] || jerseyImages['Unknown'];
+  };
 
   const PlayerRow = ({ position, maxPlayers }) => {
     const players = selectedPlayers.filter((p) => p.position === position);
