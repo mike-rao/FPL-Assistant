@@ -16,6 +16,7 @@ body {
   margin: 1.5rem 0;
   background: linear-gradient(135deg, #f39c12, #9b59b6); /* Gradient color */
   -webkit-background-clip: text;
+  background-clip: none;
   -webkit-text-fill-color: transparent; /* Makes gradient visible on text */
   letter-spacing: 0.2rem; /* Adds spacing between characters for better readability */
   text-transform: uppercase; /* Capitalize the title for dramatic effect */
@@ -55,6 +56,7 @@ body {
   color: white;
   background: linear-gradient(90deg, #3295ff, #ff4583);
   -webkit-background-clip: text;
+  background-clip: none;
   -webkit-text-fill-color: transparent;
   font-size: 1.8rem;
   margin-bottom: 1rem;
@@ -81,6 +83,7 @@ body {
   text-align: center;color: white;
   background: linear-gradient(90deg, #bf34ff, #ff0000);
   -webkit-background-clip: text;
+  background-clip: none;
   -webkit-text-fill-color: transparent;
   font-size: 1.8rem;
   margin-bottom: 1rem;

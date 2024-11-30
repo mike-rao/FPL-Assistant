@@ -20,6 +20,7 @@
     color: white;
     background: linear-gradient(90deg, #ff8800, #61ff4c);
     -webkit-background-clip: text;
+    background-clip: none;
     -webkit-text-fill-color: transparent;
     font-size: 1.3rem;
   }
