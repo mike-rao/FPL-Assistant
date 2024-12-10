@@ -3,8 +3,7 @@ import React, { useState, useEffect } from "react";
 import "../styles/TeamFormation.css";
 import Swal from 'sweetalert2';
 import substitutionIcon from "../images/substitution.png";
-import unknownJersey from '../images/jerseys/Unknown.png';
-import unknownGoalkeeperJersey from '../images/jerseys/Unknown Goalkeeper.png';
+import redxIcon from "../images/red_x.png";
 import jerseyImages from '../helpers/jerseyImages';
 
 function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
@@ -14,7 +13,7 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
 
   const handleClearTeam = () => {
     setSelectedPlayers([]);
-    setIsPickTeamMode(false); // Reset to Team Formation mode
+    setIsPickTeamMode(false); // Reset to Build Team mode
     setPreviousFormation({ GKP: 1, DEF: 4, MID: 4, FWD: 2 });
   };
 
@@ -69,6 +68,11 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
   const handleToggleMode = () => {
     setIsPickTeamMode(!isPickTeamMode); // Toggle between modes
     setActivePlayer(null); // Reset active player to clear substitution state
+  };
+
+  const handlePlayerRemove = (player) => {
+    const updatedPlayers = selectedPlayers.filter((p) => p.id !== player.id);
+    setSelectedPlayers(updatedPlayers);
   };
 
   const handleSubstitution = (player) => {
@@ -195,6 +199,17 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
                     }}
                     />
                 )}
+                {!isPickTeamMode && player && (
+                  <img
+                    src={redxIcon} // Replace with actual path to your "X" icon
+                    alt="Remove"
+                    className="remove-icon"
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent triggering slot click
+                      handlePlayerRemove(player);
+                    }}
+                  />
+                )}
                 {player?.price && ( // Conditionally render the div
                   <div className="player-price">£{player.price}m</div>
                 )}
@@ -272,14 +287,14 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
     <div className={`middle-column ${isPickTeamMode ? 'pick-team-mode' : ''}`}>
       <div className="header">
         <div className="title">
-          <h2>{isPickTeamMode ? "Pick Team" : "Team Formation"}</h2>
+          <h2>{isPickTeamMode ? "Pick Team" : "Build Team"}</h2>
         </div>
         <div className="budget-container">
           <span className="budget">Budget: £{totalCost.toFixed(1)}m</span>
           <div className="buttons-container">
           {isPickTeamMode ? (
-            <button className="team-formation-button" onClick={handleToggleMode}>
-              Team Formation
+            <button className="edit-team-button" onClick={handleToggleMode}>
+              Edit Team
             </button>
           ) : (
             <>

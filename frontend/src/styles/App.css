@@ -8,6 +8,10 @@ body {
   color: #e0e0e0; /* Light gray text */
 }
 
+.App {
+  padding-bottom: 20px;
+}
+
 .App > h1 {
   text-align: center;
   font-family: 'Anton', sans-serif; /* Wide, thick font for the title */
@@ -60,7 +64,7 @@ body {
   -webkit-text-fill-color: transparent;
   font-size: 1.8rem;
   margin-bottom: 1rem;
-  padding-bottom: 3%;
+  padding-bottom: 2%;
 }
 
 /* Middle Column */
