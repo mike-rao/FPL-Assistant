@@ -1,10 +1,28 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from scraper import scrape_fpl_data
-from data_cleaner import clean_and_preprocess_data
+from scraper import get_cached_players, get_players_from_db
 
 app = Flask(__name__)
 CORS(app)
+
+# Route to fetch player data
+@app.route('/players', methods=['GET'])
+def get_players():
+    try:
+        # Fetch players from cache or scrape as needed
+        players = get_cached_players()
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    return jsonify(players)
+
+# Route to fetch player data from database
+@app.route('/players/db', methods=['GET'])
+def get_players_from_database():
+    try:
+        players = get_players_from_db()
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    return jsonify(players)
 
 @app.route('/get_player_data', methods=['GET'])
 def get_player_data():
@@ -71,7 +89,7 @@ def get_player_data():
         {"id": 60, "first_name": "Neto", "last_name": "", "team": "Bournemouth", "position": "GKP", "price": 4.5, "form": 4.5, "pts_per_match": 5.2, "total_pts": 52, "total_bonus": 6, "ict_index": 72.0, "tsb%": 28.0}
     ]
 
-    return jsonify(player_data)  # Return as JSON
+    return jsonify(player_data)
 
 if __name__ == '__main__':
     app.run(debug=True)
