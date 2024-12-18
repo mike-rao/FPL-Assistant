@@ -221,7 +221,7 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
                     className="player-jersey" 
                 />
               )}
-              <span className="player-name">{player?.last_name || player?.first_name || ""}</span>
+              <span className="player-name">{player?.display_name || ""}</span>
               <span className = "player-team">{player?.team}</span>
             </div>
           );
@@ -239,7 +239,7 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
             <p style="margin: 0; font-size: 1.2em;">
               ${["GKP", "DEF", "MID", "FWD"][player.position - 1]}
             </p>
-            <p style="margin: 0; font-size: 1.5em; font-weight: bold;">${player.first_name} ${player.last_name}</p>
+            <p style="margin: 0; font-size: 1.5em; font-weight: bold;">${player.name}</p>
             <p style="margin: 0; font-size: 1em; color: gray;">${player.team}</p>
           </div>
           
@@ -271,7 +271,7 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
             </div>
             <div style="border-left: 1px solid #ddd; padding-left: 1rem;">
               <p style="margin: 0; font-weight: bold;">TSB%</p>
-              <p style="margin: 0;">${player["tsb%"]}%</p>
+              <p style="margin: 0;">${player["tsb_percent"]}%</p>
             </div>
           </div>
         </div>
@@ -354,7 +354,7 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
                         />
                     )}
                     <span className="player-name" onClick={() => activePlayer && handlePlayerSwap(activePlayer, player)}>
-                    {player?.last_name || player?.first_name || ""}
+                    {player?.display_name || ""}
                     </span>
                     <span className = "player-team">{player?.team}</span>
                 </div>

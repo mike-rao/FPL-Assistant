@@ -30,6 +30,12 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   transition: border-color 0.3s, box-shadow 0.3s; /* Smooth hover effect */
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.player-team-display {
+  color: rgba(255, 255, 255, 0.4);
 }
 
 .player-list > div:hover {
@@ -84,4 +90,32 @@
 .search {
     width: 100%;
     padding-left: 5px;
+}
+
+.loader__btn {
+  margin-top: 15px;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgb(255, 255, 255);
+}
+
+.loader {
+  border: 3px solid rgba(255, 255, 255, 0.9);
+  border-left-color: transparent;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  animation: spin89345 2s linear infinite;
+}
+
+@keyframes spin89345 {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }

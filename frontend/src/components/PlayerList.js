@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../styles/PlayerList.css";
 import Swal from 'sweetalert2';
 
-function PlayerList({ playerData, selectedPlayers, setSelectedPlayers }) {
+function PlayerList({ playerData, selectedPlayers, setSelectedPlayers, loading }) {
   const [filter, setFilter] = useState("All players");
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -67,7 +67,7 @@ function PlayerList({ playerData, selectedPlayers, setSelectedPlayers }) {
     }
     if (
       searchTerm &&
-      !`${player.first_name} ${player.last_name}`
+      !`${player.name}`
         .toLowerCase()
         .includes(searchTerm.toLowerCase())
     ) {
@@ -75,6 +75,8 @@ function PlayerList({ playerData, selectedPlayers, setSelectedPlayers }) {
     }
     return true;
   });
+
+  const sortedPlayers = [...filteredPlayers].sort((a, b) => b.total_pts - a.total_pts);
 
   return (
     <div className="left-column">
@@ -95,17 +97,25 @@ function PlayerList({ playerData, selectedPlayers, setSelectedPlayers }) {
         />
       </div>
       <div className="player-list">
-        {filteredPlayers.map((player) => (
-          <div
-            key={player.id}
-            onClick={() => handlePlayerSelect(player)}
-            className={
-              selectedPlayers.find((p) => p.id === player.id) ? "selected" : ""
-            }
-          >
-            {player.first_name} {player.last_name}
+        {loading ? (
+          <div class="loader__btn">
+            <div class="loader"></div>
+            Loading...
           </div>
-        ))}
+        ) : (
+          sortedPlayers.map((player) => (
+            <div
+              key={player.id}
+              onClick={() => handlePlayerSelect(player)}
+              className={
+                selectedPlayers.find((p) => p.id === player.id) ? "selected" : ""
+              }
+            >
+              {player.name} 
+              <span className="player-team-display"> | {["GKP", "DEF", "MID", "FWD"][player.position - 1]} | {player.team}</span> 
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
