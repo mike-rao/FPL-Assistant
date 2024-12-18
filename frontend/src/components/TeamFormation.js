@@ -1,4 +1,3 @@
-// frontend/src/components/TeamFormation.js
 import React, { useState, useEffect } from "react";
 import "../styles/TeamFormation.css";
 import Swal from 'sweetalert2';
@@ -13,13 +12,13 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
 
   const handleClearTeam = () => {
     setSelectedPlayers([]);
-    setIsPickTeamMode(false); // Reset to Build Team mode
+    setIsPickTeamMode(false);
     setPreviousFormation({ GKP: 1, DEF: 4, MID: 4, FWD: 2 });
   };
 
   useEffect(() => {
     if (isPickTeamMode) {
-      // Store the formation when switching to "Pick Team" mode
+      // store the formation when switching to "Pick Team" mode
       const startersCount = selectedPlayers.slice(0, 11).reduce(
         (counts, player) => {
           const positionName = ["GKP", "DEF", "MID", "FWD"][player.position - 1];
@@ -30,15 +29,14 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
       );
       setPreviousFormation(startersCount);
     }
-  }, [isPickTeamMode, selectedPlayers]); // Run effect when mode or players change
+  }, [isPickTeamMode, selectedPlayers]);
 
   const handleSetTeam = () => {
     if (selectedPlayers.length === 15) {
-      // If no previous formation, default to 4-4-2
       const formation = previousFormation || { GKP: 1, DEF: 4, MID: 4, FWD: 2 };
       const sortedPlayers = [];
       let remainingPlayers = [...selectedPlayers];
-      // Iterate through positions and add starters based on formation
+      // iterate through positions and add starters based on formation
       for (const position of [1, 2, 3, 4]) {
         const positionPlayers = remainingPlayers.filter(
           (p) => p.position === position
@@ -53,7 +51,7 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
           (p) => !sortedPlayers.includes(p)
         );
       }
-      sortedPlayers.push(...remainingPlayers); // Add remaining as subs
+      sortedPlayers.push(...remainingPlayers);
       setSelectedPlayers(sortedPlayers);
       setIsPickTeamMode(true);
     } else {
@@ -66,8 +64,8 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
   };
 
   const handleToggleMode = () => {
-    setIsPickTeamMode(!isPickTeamMode); // Toggle between modes
-    setActivePlayer(null); // Reset active player to clear substitution state
+    setIsPickTeamMode(!isPickTeamMode);
+    setActivePlayer(null);
   };
 
   const handlePlayerRemove = (player) => {
@@ -77,10 +75,8 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
 
   const handleSubstitution = (player) => {
     if (activePlayer && activePlayer.id === player.id) {
-      // If the same player is clicked again, deactivate
       setActivePlayer(null);
     } else {
-      // Otherwise, activate the clicked player
       setActivePlayer(player);
     }
   };
@@ -90,49 +86,46 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
     const index1 = updatedPlayers.findIndex((p) => p.id === player1.id);
     const index2 = updatedPlayers.findIndex((p) => p.id === player2.id);
 
-    // Perform the swap
     [updatedPlayers[index1], updatedPlayers[index2]] = [
         updatedPlayers[index2],
         updatedPlayers[index1],
     ];
 
     setSelectedPlayers(updatedPlayers);
-    setActivePlayer(null); // Reset active player
+    setActivePlayer(null);
   };
 
   const isEligibleForSubstitution = (player) => {
-    if (!activePlayer) return false; // No active player, no substitutions possible
-    if (activePlayer.id === player.id) return false; // Same player cannot swap with itself
-    // Goalkeeper substitution logic: GK can only swap with another GK
+    if (!activePlayer) return false; // if no active player then no substitutions possible
+    if (activePlayer.id === player.id) return false; // same player cannot swap with itself
+    // GKP can only swap with another GKP
     if (activePlayer.position === 1 || player.position === 1) {
       return activePlayer.position === 1 && player.position === 1;
     }
-    // Determine if players are starters or substitutes
     const activePlayerIsStarter = starters.includes(activePlayer);
     const targetPlayerIsStarter = starters.includes(player);
     const activePlayerIsSubstitute = substitutes.includes(activePlayer);
-    // Get the current number of starting defenders
     const currentDefendersCount = getPositionCount(2);
-    // Rule: Restrict swaps when only 3 starting defenders remain
+    // restrict substitutions when only 3 starting defenders remain
     if (currentDefendersCount === 3) {
       if (activePlayerIsStarter && activePlayer.position === 2) {
-        // Starting defenders can only swap with other starting defenders
+        // starting defenders can only swap with other starting defenders
         return targetPlayerIsStarter && player.position === 2;
       }
       if (activePlayerIsSubstitute) {
-        // Substitutes cannot swap with starting defenders
+        // substitutes cannot swap with starting defenders
         return player.position !== 2 || !targetPlayerIsStarter;
       }
     }
-    // Allow starters to swap with other starters of the same position
+    // allow starters to swap with other starters of the same position
     if (activePlayerIsStarter && targetPlayerIsStarter && activePlayer.position === player.position) {
       return true;
     }
-    // Allow substitutes to swap with starters or substitutes of different positions (except GK)
+    // allow substitutes to swap with players of different positions except GKP
     if (activePlayerIsSubstitute && player.position !== 1) {
       return true;
     }
-    // Default logic: Allow swapping only for the same position
+    // default allow swapping only for the same position
     return activePlayer.position === player.position;
   };
 
@@ -158,12 +151,10 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
   const totalCost = selectedPlayers.reduce((sum, player) => sum + player.price, 0);
 
   const getJerseyImage = (player) => {
-    if (!player) return jerseyImages['Unknown']; // Fallback for no player data
-    // Check if the player is a goalkeeper
+    if (!player) return jerseyImages['Unknown'];
     if (player.position === 1) {
       return jerseyImages['Goalkeeper'] || jerseyImages['Unknown Goalkeeper'];
     }
-    // Use team jersey or fallback to 'Unknown'
     return jerseyImages[player.team] || jerseyImages['Unknown'];
   };
 
@@ -180,9 +171,9 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
               onClick={() => {
                 if (player) {
                   if (!isPickTeamMode || (isPickTeamMode && !activePlayer)) {
-                    showPlayerInfo(player); // Show player info
+                    showPlayerInfo(player);
                   } else if (isPickTeamMode && activePlayer) {
-                    handlePlayerSwap(activePlayer, player); // Swap players
+                    handlePlayerSwap(activePlayer, player);
                   }
                 }
               }}
@@ -194,23 +185,23 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
                     alt="Sub"
                     className="sub-icon"
                     onClick={(e) => {
-                        e.stopPropagation(); // Prevent triggering slot click
+                        e.stopPropagation();
                         handleSubstitution(player);
                     }}
                     />
                 )}
                 {!isPickTeamMode && player && (
                   <img
-                    src={redxIcon} // Replace with actual path to your "X" icon
+                    src={redxIcon}
                     alt="Remove"
                     className="remove-icon"
                     onClick={(e) => {
-                      e.stopPropagation(); // Prevent triggering slot click
+                      e.stopPropagation();
                       handlePlayerRemove(player);
                     }}
                   />
                 )}
-                {player?.price && ( // Conditionally render the div
+                {player?.price && (
                   <div className="player-price">£{player.price}m</div>
                 )}
               </div>
@@ -278,8 +269,8 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
       `,
       showConfirmButton: true,
       confirmButtonText: "Close",
-      width: 800, // Adjust the popup width
-      padding: "1.5rem", // Add padding for spacing
+      width: 800,
+      padding: "1.5rem",
     });
   };  
 
@@ -323,9 +314,9 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
                     onClick={() => {
                         if (player) {
                           if (!isPickTeamMode || (isPickTeamMode && !activePlayer)) {
-                            showPlayerInfo(player); // Show player info
+                            showPlayerInfo(player);
                           } else if (isPickTeamMode && activePlayer) {
-                            handlePlayerSwap(activePlayer, player); // Swap players
+                            handlePlayerSwap(activePlayer, player);
                           }
                         }
                     }}
@@ -337,12 +328,12 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
                             alt="Sub"
                             className="sub-icon"
                             onClick={(e) => {
-                                e.stopPropagation(); // Prevent triggering slot click
+                                e.stopPropagation();
                                 handleSubstitution(player);
                             }}
                             />
                         )}
-                        {player?.price && ( // Conditionally render the div
+                        {player?.price && (
                         <div className="player-price">£{player.price}m</div>
                         )}
                     </div>

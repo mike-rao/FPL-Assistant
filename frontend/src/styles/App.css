@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap'); /* Import thick, wide font for title */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'); /* Import modern font */
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 body {
   margin: 0;
-  font-family: 'Roboto', sans-serif; /* Sleek, modern font */
-  background-color: #121212; /* Darker dark gray */
-  color: #e0e0e0; /* Light gray text */
+  font-family: 'Roboto', sans-serif; 
+  background-color: #121212;
+  color: #e0e0e0;
 }
 
 .App {
@@ -14,21 +14,21 @@ body {
 
 .App > h1 {
   text-align: center;
-  font-family: 'Anton', sans-serif; /* Wide, thick font for the title */
-  font-size: 4rem; /* Larger size to emphasize the gradient */
+  font-family: 'Anton', sans-serif;
+  font-size: 4rem; 
   font-weight: 300;
   margin: 1.5rem 0;
-  background: linear-gradient(135deg, #f39c12, #9b59b6); /* Gradient color */
+  background: linear-gradient(135deg, #f39c12, #9b59b6);
   -webkit-background-clip: text;
   background-clip: none;
-  -webkit-text-fill-color: transparent; /* Makes gradient visible on text */
-  letter-spacing: 0.2rem; /* Adds spacing between characters for better readability */
-  text-transform: uppercase; /* Capitalize the title for dramatic effect */
-  transform: scaleX(1.5); /* Stretch horizontally */
-  font-size: clamp(2rem, 5vw, 5rem); /* Responsive font size */
-  word-wrap: break-word; /* Allow wrapping if the text is too long */
-  max-width: 60%; /* Prevent it from being wider than the container */
-  margin-left: auto; /* Center the text horizontally */
+  -webkit-text-fill-color: transparent; 
+  letter-spacing: 0.2rem; 
+  text-transform: uppercase; 
+  transform: scaleX(1.5); 
+  font-size: clamp(2rem, 5vw, 5rem); 
+  word-wrap: break-word; 
+  max-width: 60%; 
+  margin-left: auto; 
   margin-right: auto;
 }
 
@@ -39,7 +39,6 @@ body {
   padding-bottom: 1rem;
 }
 
-/* Layout styling */
 .columns {
   display: flex;
   justify-content: space-between;
@@ -47,11 +46,10 @@ body {
   gap: 1rem;
 }
 
-/* Left Column */
 .left-column {
   width: 30%;
   padding: 20px;
-  background-color: #1e1e1e; /* Slightly lighter than the background */
+  background-color: #1e1e1e; 
   border-radius: 10px;
 }
 
@@ -67,7 +65,6 @@ body {
   padding-bottom: 2%;
 }
 
-/* Middle Column */
 .middle-column {
   width: 40%;
   padding: 20px;
@@ -75,7 +72,6 @@ body {
   border-radius: 10px;
 }
 
-/* Right Column */
 .right-column {
   width: 30%;
   padding: 20px;
@@ -108,10 +104,9 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #888; /* Lighter color when hovered */
+  background-color: #888; 
 }
 
-/* Media queries for responsiveness */
 @media (max-width: 768px) {
   .columns {
     flex-direction: column;

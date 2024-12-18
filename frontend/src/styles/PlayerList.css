@@ -9,19 +9,19 @@
     width: 8px;
   }
   
-  .player-list::-webkit-scrollbar-thumb {
-    background-color: #444;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .player-list::-webkit-scrollbar-track {
-    background-color: #1e1e1e;
-  }
+.player-list::-webkit-scrollbar-thumb {
+  background-color: #444;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
 
-  .player-list::-webkit-scrollbar-thumb:hover {
-    background-color: #888; /* Lighter color when hovered */
-  }
+.player-list::-webkit-scrollbar-track {
+  background-color: #1e1e1e;
+}
+
+.player-list::-webkit-scrollbar-thumb:hover {
+  background-color: #888; 
+}
 
 .player-list > div {
   cursor: pointer;
@@ -29,7 +29,7 @@
   margin-bottom: 5px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  transition: border-color 0.3s, box-shadow 0.3s; /* Smooth hover effect */
+  transition: border-color 0.3s, box-shadow 0.3s;
   white-space: nowrap;
   overflow: hidden;
 }
@@ -39,9 +39,9 @@
 }
 
 .player-list > div:hover {
-    background-color: #5600cf;
-    border-color: #4c7ef3; /* Blue border on hover */
-    box-shadow: 0 0 8px #4c7ef3; /* Soft glow on hover */
+  background-color: #5600cf;
+  border-color: #4c7ef3; 
+  box-shadow: 0 0 8px #4c7ef3; 
 }
 
 .player-list > div.selected {
@@ -49,47 +49,47 @@
 }
 
 .player-list > div.selected:hover {   
-    background-color: #5600cf;
-    border-color: #a36df0; /* Purple border on focus */
-    box-shadow: 0 0 12px #a36df0; /* Soft glow on focus */
+  background-color: #5600cf;
+  border-color: #a36df0; 
+  box-shadow: 0 0 12px #a36df0; 
 }
 
 .player-filters {
-    display: flex;
-    padding-bottom: 5px;
-    display: flex;
+  display: flex;
+  padding-bottom: 5px;
+  display: flex;
 }
 
 .filter {
-    margin-right: 0.5vw;
-    padding-right: 1.5vw;
+  margin-right: 0.5vw;
+  padding-right: 1.5vw;
 }
 
 .filter, .search {
-    padding: 7px;
-    padding-left: 0px;
-    font-size: 1rem;
-    color: #f0f0f0; /* Light text color for dark theme */
-    background-color: #2b2b2b; /* Dark gray background */
-    border: 1px solid #444; /* Subtle border */
-    border-radius: 5px; /* Rounded corners */
-    outline: none; /* Remove the default outline */
-    transition: border-color 0.3s, box-shadow 0.3s; /* Smooth hover effect */
-  }
-  
-  .filter:hover, .search:hover {
-    border-color: #4c7ef3; /* Blue border on hover */
-    box-shadow: 0 0 8px #4c7ef3; /* Soft glow on hover */
-  }
-  
-  .filter:focus, .search:focus {
-    border-color: #a36df0; /* Purple border on focus */
-    box-shadow: 0 0 12px #a36df0; /* Soft glow on focus */
-  }
+  padding: 7px;
+  padding-left: 0px;
+  font-size: 1rem;
+  color: #f0f0f0; 
+  background-color: #2b2b2b; 
+  border: 1px solid #444; 
+  border-radius: 5px; 
+  outline: none; 
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.filter:hover, .search:hover {
+  border-color: #4c7ef3; 
+  box-shadow: 0 0 8px #4c7ef3; 
+}
+
+.filter:focus, .search:focus {
+  border-color: #a36df0; 
+  box-shadow: 0 0 12px #a36df0; 
+}
 
 .search {
-    width: 100%;
-    padding-left: 5px;
+  width: 100%;
+  padding-left: 5px;
 }
 
 .loader__btn {

@@ -8,8 +8,8 @@ import Swal from 'sweetalert2';
 function App() {
   const [playerData, setPlayerData] = useState([]);
   const [selectedPlayers, setSelectedPlayers] = useState([]);
-  const [loading, setLoading] = useState(false); // Loading state for API calls
-  const [error, setError] = useState(null); // Error handling
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:5000";
 
@@ -57,7 +57,7 @@ function App() {
         icon: 'success',
         confirmButtonText: 'OK',
       });
-      await fetchPlayerData(); // Refresh player data after scraping
+      await fetchPlayerData();
     } catch (error) {
       setError(error.message);
       console.error("Error scraping and saving data:", error);
@@ -67,7 +67,7 @@ function App() {
   };
 
   useEffect(() => {
-    fetchPlayerData(); // Fetch data when the component mounts
+    fetchPlayerData();
   }, [fetchPlayerData]);
 
   return (

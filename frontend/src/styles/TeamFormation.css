@@ -1,221 +1,220 @@
-/* frontend/src/styles/TeamFormation.css */
 .formation {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-image: url('../images/soccer-field.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    min-height: 48vw;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: url('../images/soccer-field.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 48vw;
+}
 
-  .header { /* Styles for the header div */
-    display: flex;
-    flex-direction: column;
-  }
+.header {
+  display: flex;
+  flex-direction: column;
+}
 
-  .title { /* Styles for the title div */
-    text-align: center; /* Center the h2 within the title div */
-    color: white;
-    background: linear-gradient(90deg, #ff8800, #61ff4c);
-    -webkit-background-clip: text;
-    background-clip: none;
-    -webkit-text-fill-color: transparent;
-    font-size: 1.2rem;
-  }
+.title {
+  text-align: center; 
+  color: white;
+  background: linear-gradient(90deg, #ff8800, #61ff4c);
+  -webkit-background-clip: text;
+  background-clip: none;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.2rem;
+}
 
-  .budget-container { /* Styles for the container */
-    display: flex;
-    justify-content: space-between;
-    padding-right: 0%;
-    padding-bottom: 2%;
-  }
-  
-  .budget { /* Styles for the budget text */
-    align-content: space-around;
-    font-weight: normal; /* Make it non-bolded */
-    font-size:x-large;
-    padding-left: 0%;
-  }
+.budget-container { 
+  display: flex;
+  justify-content: space-between;
+  padding-right: 0%;
+  padding-bottom: 2%;
+}
 
-  .buttons-container { /* New container for the buttons */
-    display: flex;
-    gap: 0.5vw; /* Add some space between the buttons */
-    margin-left: auto; /* Push the buttons to the right */
-  }
+.budget { 
+  align-content: space-around;
+  font-weight: normal; 
+  font-size:x-large;
+  padding-left: 0%;
+}
 
-  .clear-button {
-    align-items: center;
-    width: 5vw;
-    height: 1.8vw;
-    min-width: 50px;
-    min-height: 30px;
-    background: linear-gradient(90deg, #f39c12, #be7500);
-    color: #1e1e1e;
-    border: 5px;
-    border-color: white;
-    font-size: 1rem;
-    font-weight: bold;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
+.buttons-container { 
+  display: flex;
+  gap: 0.5vw; 
+  margin-left: auto; 
+}
 
-  .edit-team-button, .set-team-button {
-    align-items: end;
-    width: 3vw;
-    height: 1.8vw;
-    min-width: 115px;
-    min-height: 30px;
-    background: linear-gradient(90deg, #ffcf81, #f39c12);
-    color: #1e1e1e;
-    border: none;
-    font-size: 1rem;
-    font-weight: bold;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
+.clear-button {
+  align-items: center;
+  width: 5vw;
+  height: 1.8vw;
+  min-width: 50px;
+  min-height: 30px;
+  background: linear-gradient(90deg, #f39c12, #be7500);
+  color: #1e1e1e;
+  border: 5px;
+  border-color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
 
-  button:hover, a:hover {
-    background: linear-gradient(90deg, #ffa467, #d35400);
-    color: #fff; /* White text for contrast */
-    box-shadow: 0 0 10px 2px #ffa467;
-  }
+.edit-team-button, .set-team-button {
+  align-items: end;
+  width: 3vw;
+  height: 1.8vw;
+  min-width: 115px;
+  min-height: 30px;
+  background: linear-gradient(90deg, #ffcf81, #f39c12);
+  color: #1e1e1e;
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
 
-  .player-row:first-child {
-    margin-top: 3vw;
-  }
-  
-  .player-row {
-    display: flex;
-    gap: 1.3vw;
-    margin-bottom: 1vw; 
-  }
-  
-  .player-row:last-child { /* Target the last row (substitutes) */
-    margin-top: 1.7vw; /* Add a bigger gap above the substitutes */
-  }
+button:hover, a:hover {
+  background: linear-gradient(90deg, #ffa467, #d35400);
+  color: #fff; 
+  box-shadow: 0 0 10px 2px #ffa467;
+}
 
-  .middle-column:not(.pick-team-mode) .player-row:last-child {
-    margin-top: 0px; /* Reset margin-top in Team Formation mode */
-  }
-  
-  .player-slot {
-    width: 5vw;
-    height: 6.5vw;
-    border: 0.2vw solid #ccc;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    color: black;
-    justify-content: space-between;
-    padding-top: 0.2vw;
-    padding-bottom: 0.1vw;
-    cursor: pointer;
-    background-color: #ffc567;
-    font-size: 0.9vw;
-    opacity: 1;
-    transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
-  }
+.player-row:first-child {
+  margin-top: 3vw;
+}
 
-  .player-slot:hover {
-    background-color: #ffe8c4; /* Slightly darker when hovered */
-    box-shadow: 0 0 10px 2px #ffa467;
-  }
+.player-row {
+  display: flex;
+  gap: 1.3vw;
+  margin-bottom: 1vw; 
+}
 
-  .player-slot.disabled:hover {
-    background-color: white; /* No hover effect for disabled slots */
-    cursor: not-allowed; /* Show a disabled cursor */
-  }
+.player-row:last-child { 
+  margin-top: 1.7vw; 
+}
 
-  .player-slot.eligible:hover {
-    background-color: #ffe8c4; /* Highlight eligible substitutes */
-  }
+.middle-column:not(.pick-team-mode) .player-row:last-child {
+  margin-top: 0px; 
+}
 
-  .sub-icon {
-    position: absolute;
-    left: 0.15vw;
-    width: 1vw; /* Adjust size as needed */
-    height: 1vw;
-    cursor: pointer;
-  }
+.player-slot {
+  width: 5vw;
+  height: 6.5vw;
+  border: 0.2vw solid #ccc;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: black;
+  justify-content: space-between;
+  padding-top: 0.2vw;
+  padding-bottom: 0.1vw;
+  cursor: pointer;
+  background-color: #ffc567;
+  font-size: 0.9vw;
+  opacity: 1;
+  transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
 
-  .remove-icon {
-    position: absolute;
-    left: 0.15vw;
-    width: 1vw; /* Adjust size as needed */
-    height: 1vw;
-    cursor: pointer;
-  }
+.player-slot:hover {
+  background-color: #ffe8c4; 
+  box-shadow: 0 0 10px 2px #ffa467;
+}
 
-  .player-slot.active { /* Target .player-slot within active container */
-    border-color: red; /* Change border color to blue */
-  }
+.player-slot.disabled:hover {
+  background-color: white; 
+  cursor: not-allowed; 
+}
 
-  .player-slot.eligible { 
-    opacity: 1;
-  }
+.player-slot.eligible:hover {
+  background-color: #ffe8c4; 
+}
 
-  .player-slot.disabled {
-    opacity: 0.5;
-    pointer-events: none; /* Prevent interaction */
-  }
-  
-  .responsive-popup {
-    max-width: 90vw;
-    overflow: hidden;
-  }
-  
-  .responsive-popup div p {
-    margin: 0;
-  }
+.sub-icon {
+  position: absolute;
+  left: 0.15vw;
+  width: 1vw; 
+  height: 1vw;
+  cursor: pointer;
+}
 
-  .player-team {
-    font-size: 0.6vw;
-  }
+.remove-icon {
+  position: absolute;
+  left: 0.15vw;
+  width: 1vw; 
+  height: 1vw;
+  cursor: pointer;
+}
 
-  .player-slot span:not(:empty) + span { /* Target only when the first span has content */
-    border-top: 1px solid #ccc;
-    padding-top: 1px;
-    width: 100%; 
-  }
+.player-slot.active { 
+  border-color: red; 
+}
 
-  .player-price {
-    font-size: 0.7vw;
-    flex-grow: 1; /* Allow the price to take up available space */
-    text-align: center;
-  }
+.player-slot.eligible { 
+  opacity: 1;
+}
 
-  .player-slot-top {
-    display: flex;
-    justify-content: center;
-    align-items: center; 
-    position: relative;
-    width: 100%; 
-  }
+.player-slot.disabled {
+  opacity: 0.5;
+  pointer-events: none; 
+}
 
-  .substitutes-row {
-    background-color: rgba(48, 48, 48, 0.68);
-    border: 0.2vw solid #cccccc48; /* Add a border around the substitutes row */
-    padding: 1vw; /* Add some padding for visual separation */
-    padding-left: 4vw;
-    padding-right: 4vw;
-    border-radius: 10px; /* Optional: Add rounded corners */
-  }
+.responsive-popup {
+  max-width: 90vw;
+  overflow: hidden;
+}
 
-  .player-jersey {
-    width: 4vw;
-  }
+.responsive-popup div p {
+  margin: 0;
+}
 
-  .player-name {
-    font-size: 0.8vw; /* Adjust font size as needed */
-    white-space: nowrap;  /* Prevent wrapping */
-    overflow: hidden;     /* Hide text that overflows */
-    text-overflow: ellipsis; /* Add ellipsis if text overflows */
-    max-width: 100%;      /* Ensure the element doesn't exceed its container */
-    display: block;       /* Allow block-level styling */
-  }
+.player-team {
+  font-size: 0.6vw;
+}
+
+.player-slot span:not(:empty) + span { /* target only when the first span has content */
+  border-top: 1px solid #ccc;
+  padding-top: 1px;
+  width: 100%; 
+}
+
+.player-price {
+  font-size: 0.7vw;
+  flex-grow: 1; 
+  text-align: center;
+}
+
+.player-slot-top {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  position: relative;
+  width: 100%; 
+}
+
+.substitutes-row {
+  background-color: rgba(48, 48, 48, 0.68);
+  border: 0.2vw solid #cccccc48;
+  padding: 1vw; 
+  padding-left: 4vw;
+  padding-right: 4vw;
+  border-radius: 10px; 
+}
+
+.player-jersey {
+  width: 4vw;
+}
+
+.player-name {
+  font-size: 0.8vw;
+  white-space: nowrap; 
+  overflow: hidden;     
+  text-overflow: ellipsis; 
+  max-width: 100%;    
+  display: block;       
+}
