@@ -29,7 +29,8 @@ def initialize_database():
             total_pts INTEGER,
             total_bonus INTEGER,
             ict_index NUMERIC,
-            tsb_percent NUMERIC
+            tsb_percent NUMERIC,
+            fdr INTEGER
         )
     ''')
     conn.commit()
@@ -44,9 +45,9 @@ def save_to_database(players):
         cur.execute('''
             INSERT INTO players (
                 name, display_name, team, position, price, form, pts_per_match, 
-                total_pts, total_bonus, ict_index, tsb_percent
+                total_pts, total_bonus, ict_index, tsb_percent, fdr
             )
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             ON CONFLICT (name) DO UPDATE SET
                 team = EXCLUDED.team,
                 position = EXCLUDED.position,
@@ -56,11 +57,12 @@ def save_to_database(players):
                 total_pts = EXCLUDED.total_pts,
                 total_bonus = EXCLUDED.total_bonus,
                 ict_index = EXCLUDED.ict_index,
-                tsb_percent = EXCLUDED.tsb_percent
+                tsb_percent = EXCLUDED.tsb_percent,
+                fdr = EXCLUDED.fdr
         ''', (
             player["name"], player["display_name"], player["team"], player["position"],
             player["price"], player["form"], player["pts_per_match"], player["total_pts"],
-            player["total_bonus"], player["ict_index"], player["tsb_percent"]
+            player["total_bonus"], player["ict_index"], player["tsb_percent"], player["fdr"]
         ))
     conn.commit()
     cur.close()
@@ -88,7 +90,8 @@ def get_players_from_db():
             "total_pts": int(p[8]),
             "total_bonus": int(p[9]),
             "ict_index": float(p[10]),
-            "tsb_percent": float(p[11])
+            "tsb_percent": float(p[11]),
+            "fdr": int(p[12])
         }
         for p in players
     ]

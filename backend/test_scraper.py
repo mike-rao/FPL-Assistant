@@ -49,6 +49,7 @@ try:
                     "total_bonus": int(popup.find_elements(By.CLASS_NAME, "styles__StatValue-sc-1tsp201-2.fgGEXH")[5].text),
                     "ict_index": float(popup.find_elements(By.CLASS_NAME, "styles__StatValue-sc-1tsp201-2.fgGEXH")[6].text),
                     "tsb_percent": float(popup.find_elements(By.CLASS_NAME, "styles__StatValue-sc-1tsp201-2.fgGEXH")[7].text[:-1]),
+                    "fdr": int(WebDriverWait(driver, 10).until(EC.presence_of_element_located(("xpath", "//*[starts-with(@class, 'FixtureDifficulty__StyledFixtureDifficulty')]"))).text)
                 })
 
                 popup.find_element(By.CLASS_NAME, "Dialog__CloseButton-sc-5bogmv-1.cgQMVU").click()

@@ -26,9 +26,9 @@ def test_scrape_stats():
 def test_save_to_database():
     print("Testing database insertion...")
     sample_players = [
-        {'name': 'Mohamed Salah', 'display_name': 'M.Salah', 'team': 'Liverpool', 'position': 'Midfielder', 'price': 13.4, 'form': 12.2, 'pts_per_match': 10.4, 'total_pts': 156, 'total_bonus': 28, 'ict_index': 188.1, 'tsb_percent': 63.4}, 
-        {'name': 'Cole Palmer', 'display_name': 'Palmer', 'team': 'Chelsea', 'position': 'Midfielder', 'price': 11.2, 'form': 8.8, 'pts_per_match': 8.0, 'total_pts': 128, 'total_bonus': 20, 'ict_index': 178.3, 'tsb_percent': 63.4},        
-        {'name': 'Bukayo Saka', 'display_name': 'Saka', 'team': 'Arsenal', 'position': 'Midfielder', 'price': 10.6, 'form': 7.8, 'pts_per_match': 7.1, 'total_pts': 106, 'total_bonus': 16, 'ict_index': 174.9, 'tsb_percent': 44.4}
+        {'name': 'Mohamed Salah', 'display_name': 'M.Salah', 'team': 'Liverpool', 'position': 'Midfielder', 'price': 13.4, 'form': 12.2, 'pts_per_match': 10.4, 'total_pts': 156, 'total_bonus': 28, 'ict_index': 188.1, 'tsb_percent': 63.4, 'fdr': 4}, 
+        {'name': 'Cole Palmer', 'display_name': 'Palmer', 'team': 'Chelsea', 'position': 'Midfielder', 'price': 11.2, 'form': 8.8, 'pts_per_match': 8.0, 'total_pts': 128, 'total_bonus': 20, 'ict_index': 178.3, 'tsb_percent': 63.4, 'fdr': 2},        
+        {'name': 'Bukayo Saka', 'display_name': 'Saka', 'team': 'Arsenal', 'position': 'Midfielder', 'price': 10.6, 'form': 7.8, 'pts_per_match': 7.1, 'total_pts': 106, 'total_bonus': 16, 'ict_index': 174.9, 'tsb_percent': 44.4, 'fdr': 2}
     ]
     try:
         save_to_database(sample_players)

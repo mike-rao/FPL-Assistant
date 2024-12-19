@@ -98,8 +98,8 @@ function PlayerList({ playerData, selectedPlayers, setSelectedPlayers, loading }
       </div>
       <div className="player-list">
         {loading ? (
-          <div class="loader__btn">
-            <div class="loader"></div>
+          <div className="loader__btn">
+            <div className="loader"></div>
             Loading...
           </div>
         ) : (
