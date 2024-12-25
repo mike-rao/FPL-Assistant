@@ -1,0 +1,118 @@
+.header, .header2 {
+    font-size: 1.3rem;
+}
+
+.header2 {
+    padding-bottom: 1rem;
+}
+
+.set-team-msg {
+    font-size: x-large;
+    color: rgba(255, 255, 255, .3);
+    font-weight: bold;
+    text-align: center;
+}
+
+.transfer-suggestions, .team, .team-score {
+    background-color: #2b2b2b;
+    border: 1px solid #444;
+    padding: 15px;
+    margin-bottom: 0.6rem;
+    border-radius: 10px;
+}
+
+.analytics-player-list {
+    flex-grow: 1;
+    max-height: 28.5vw;
+    overflow-y: auto;
+    padding-right: 10px; 
+}
+
+.analytics-player-list::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+.analytics-player-list::-webkit-scrollbar-thumb {
+  background-color: #444;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.analytics-player-list::-webkit-scrollbar-track {
+  background-color: #1e1e1e;
+}
+
+.analytics-player-list::-webkit-scrollbar-thumb:hover {
+  background-color: #888; 
+}
+
+.analytics-player-list > div {
+    cursor: pointer;
+    padding: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.transfer-info, .transfer-info2 {
+    font-size: 1rem;
+}
+
+.transfer-info {
+    padding-left: 0.7rem;
+}
+
+.budget-input {
+    max-width: 1.5rem;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.transfer-input {
+    max-width: 1.5rem;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.transfer-input-container {
+    padding-left: 1.1rem;
+    padding-right: 1.35rem;
+}
+
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+.increment-btn {
+    background: linear-gradient(90deg, #ffcf81, #f39c12);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.get-transfers-btn {
+    width: 5.7vw;
+    height: 1.8vw;
+    min-width: 110px;
+    min-height: 30px;
+    color: #1e1e1e;
+    background: linear-gradient(90deg, #ffcf81, #f39c12);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.info-container {
+    padding-bottom: 0.3rem;
+}
+
+.info-container2 {
+    padding-bottom: 1rem;
+}

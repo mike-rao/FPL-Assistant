@@ -2,12 +2,13 @@ import React, { useState, useEffect, useCallback } from "react";
 import "./styles/App.css";
 import PlayerList from "./components/PlayerList";
 import TeamFormation from "./components/TeamFormation";
-import TransferSuggestions from "./components/TransferSuggestions";
+import Analytics from "./components/Analytics";
 import Swal from 'sweetalert2';
 
 function App() {
   const [playerData, setPlayerData] = useState([]);
   const [selectedPlayers, setSelectedPlayers] = useState([]);
+  const [isPickTeamMode, setIsPickTeamMode] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -84,8 +85,13 @@ function App() {
         <TeamFormation
           selectedPlayers={selectedPlayers}
           setSelectedPlayers={setSelectedPlayers}
+          isPickTeamMode={isPickTeamMode}
+          setIsPickTeamMode={setIsPickTeamMode}
         />
-        <TransferSuggestions />
+        <Analytics 
+          selectedPlayers={selectedPlayers}
+          isPickTeamMode={isPickTeamMode}
+        />
       </div>
     </div>
   );

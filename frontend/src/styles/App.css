@@ -42,7 +42,7 @@ body {
 .columns {
   display: flex;
   justify-content: space-between;
-  padding: 1rem 2rem;
+  padding: 1rem;
   gap: 1rem;
 }
 
@@ -80,13 +80,14 @@ body {
 }
 
 .right-column > h2 {
-  text-align: center;color: white;
+  text-align: center;
+  color: white;
   background: linear-gradient(90deg, #bf34ff, #ff0000);
   -webkit-background-clip: text;
   background-clip: none;
   -webkit-text-fill-color: transparent;
   font-size: 1.8rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.4rem;
 }
 
 ::-webkit-scrollbar {

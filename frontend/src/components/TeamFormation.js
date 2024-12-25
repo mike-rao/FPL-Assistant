@@ -5,8 +5,7 @@ import substitutionIcon from "../images/substitution.png";
 import redxIcon from "../images/red_x.png";
 import jerseyImages from '../helpers/jerseyImages';
 
-function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
-  const [isPickTeamMode, setIsPickTeamMode] = useState(false);
+function TeamFormation({ selectedPlayers, setSelectedPlayers, isPickTeamMode, setIsPickTeamMode }) {
   const [activePlayer, setActivePlayer] = useState(null);
   const [previousFormation, setPreviousFormation] = useState(null);
 
@@ -320,10 +319,10 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
 
   return (
     <div className={`middle-column ${isPickTeamMode ? 'pick-team-mode' : ''}`}>
-      <div className="header">
-        <div className="title">
-          <h2>{isPickTeamMode ? "Pick Team" : "Build Team"}</h2>
-        </div>
+      <div className="title">
+        <h2>{isPickTeamMode ? "Your Team" : "Build Team"}</h2>
+      </div>
+      <div className="team-formation-container">
         <div className="budget-container">
           <span className="budget">Budget: £{totalCost.toFixed(1)}m</span>
           <div className="buttons-container">
@@ -343,59 +342,59 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers }) {
           )}
           </div>
         </div>
-      </div>
-      <div className="formation">
-        <PlayerRow position={1} maxPlayers={isPickTeamMode ? getPositionCount(1) : 2} /> {/* GKPs */}
-        <PlayerRow position={2} maxPlayers={isPickTeamMode ? getPositionCount(2) : 5} /> {/* DEFs */}
-        <PlayerRow position={3} maxPlayers={isPickTeamMode ? getPositionCount(3) : 5} /> {/* MIDs */}
-        <PlayerRow position={4} maxPlayers={isPickTeamMode ? getPositionCount(4) : 3} /> {/* FWDs */}
-        {isPickTeamMode && (
-            <div className="player-row substitutes-row">
-                {substitutes.map((player, index) => (
-                <div
-                    key={index}
-                    className={`player-slot ${getPlayerClass(player)}`}
-                    onClick={() => {
-                        if (player) {
-                          if (!isPickTeamMode || (isPickTeamMode && !activePlayer)) {
-                            showPlayerInfo(player);
-                          } else if (isPickTeamMode && activePlayer) {
-                            handlePlayerSwap(activePlayer, player);
+        <div className="formation">
+          <PlayerRow position={1} maxPlayers={isPickTeamMode ? getPositionCount(1) : 2} /> {/* GKPs */}
+          <PlayerRow position={2} maxPlayers={isPickTeamMode ? getPositionCount(2) : 5} /> {/* DEFs */}
+          <PlayerRow position={3} maxPlayers={isPickTeamMode ? getPositionCount(3) : 5} /> {/* MIDs */}
+          <PlayerRow position={4} maxPlayers={isPickTeamMode ? getPositionCount(4) : 3} /> {/* FWDs */}
+          {isPickTeamMode && (
+              <div className="player-row substitutes-row">
+                  {substitutes.map((player, index) => (
+                  <div
+                      key={index}
+                      className={`player-slot ${getPlayerClass(player)}`}
+                      onClick={() => {
+                          if (player) {
+                            if (!isPickTeamMode || (isPickTeamMode && !activePlayer)) {
+                              showPlayerInfo(player);
+                            } else if (isPickTeamMode && activePlayer) {
+                              handlePlayerSwap(activePlayer, player);
+                            }
                           }
-                        }
-                    }}
-                >
-                    <div className="player-slot-top">
-                        {isPickTeamMode && player && (
-                            <img
-                            src={substitutionIcon}
-                            alt="Sub"
-                            className="sub-icon"
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                handleSubstitution(player);
-                            }}
-                            />
-                        )}
-                        {player?.price && (
-                        <div className="player-price">£{player.price}m</div>
-                        )}
-                    </div>
-                    {player?.team && (
-                        <img 
-                            src={getJerseyImage(player)} 
-                            alt={`${player?.team || "Unknown"} jersey`} 
-                            className="player-jersey" 
-                        />
-                    )}
-                    <span className="player-name" onClick={() => activePlayer && handlePlayerSwap(activePlayer, player)}>
-                    {player?.display_name || ""}
-                    </span>
-                    <span className = "player-team">{player?.team}</span>
-                </div>
-                ))}
-            </div>
-        )}
+                      }}
+                  >
+                      <div className="player-slot-top">
+                          {isPickTeamMode && player && (
+                              <img
+                              src={substitutionIcon}
+                              alt="Sub"
+                              className="sub-icon"
+                              onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleSubstitution(player);
+                              }}
+                              />
+                          )}
+                          {player?.price && (
+                          <div className="player-price">£{player.price}m</div>
+                          )}
+                      </div>
+                      {player?.team && (
+                          <img 
+                              src={getJerseyImage(player)} 
+                              alt={`${player?.team || "Unknown"} jersey`} 
+                              className="player-jersey" 
+                          />
+                      )}
+                      <span className="player-name" onClick={() => activePlayer && handlePlayerSwap(activePlayer, player)}>
+                      {player?.display_name || ""}
+                      </span>
+                      <span className = "player-team">{player?.team}</span>
+                  </div>
+                  ))}
+              </div>
+          )}
+        </div>
       </div>
     </div>
   );

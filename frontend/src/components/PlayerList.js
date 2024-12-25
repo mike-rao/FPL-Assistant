@@ -81,41 +81,43 @@ function PlayerList({ playerData, selectedPlayers, setSelectedPlayers, loading }
   return (
     <div className="left-column">
       <h2>Player Selection</h2>
-      <div className = "player-filters">
-        <select className = "filter" value={filter} onChange={handleFilterChange}>
-          <option value="All players">All players</option>
-          <option value="GKP">Goalkeepers</option>
-          <option value="DEF">Defenders</option>
-          <option value="MID">Midfielders</option>
-          <option value="FWD">Attackers</option>
-        </select>
-        <input className = "search"
-          type="text"
-          placeholder="Search by name"
-          value={searchTerm}
-          onChange={handleSearchChange}
-        />
-      </div>
-      <div className="player-list">
-        {loading ? (
-          <div className="loader__btn">
-            <div className="loader"></div>
-            Loading...
-          </div>
-        ) : (
-          sortedPlayers.map((player) => (
-            <div
-              key={player.id}
-              onClick={() => handlePlayerSelect(player)}
-              className={
-                selectedPlayers.find((p) => p.id === player.id) ? "selected" : ""
-              }
-            >
-              {player.name} 
-              <span className="player-team-display"> | {["GKP", "DEF", "MID", "FWD"][player.position - 1]} | {player.team}</span> 
+      <div className="player-list-container">
+        <div className = "player-filters">
+          <select className = "filter" value={filter} onChange={handleFilterChange}>
+            <option value="All players">All players</option>
+            <option value="GKP">Goalkeepers</option>
+            <option value="DEF">Defenders</option>
+            <option value="MID">Midfielders</option>
+            <option value="FWD">Attackers</option>
+          </select>
+          <input className = "search"
+            type="text"
+            placeholder="Search by name"
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
+        </div>
+        <div className="player-list">
+          {loading ? (
+            <div className="loader__btn">
+              <div className="loader"></div>
+              Loading...
             </div>
-          ))
-        )}
+          ) : (
+            sortedPlayers.map((player) => (
+              <div
+                key={player.id}
+                onClick={() => handlePlayerSelect(player)}
+                className={
+                  selectedPlayers.find((p) => p.id === player.id) ? "selected" : ""
+                }
+              >
+                {player.name} 
+                <span className="player-team-display"> | {["GKP", "DEF", "MID", "FWD"][player.position - 1]} | {player.team}</span> 
+              </div>
+            ))
+          )}
+        </div>
       </div>
     </div>
   );

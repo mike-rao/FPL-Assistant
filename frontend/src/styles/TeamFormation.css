@@ -9,11 +9,6 @@
   min-height: 48vw;
 }
 
-.header {
-  display: flex;
-  flex-direction: column;
-}
-
 .title {
   text-align: center; 
   color: white;
@@ -22,6 +17,13 @@
   background-clip: none;
   -webkit-text-fill-color: transparent;
   font-size: 1.2rem;
+}
+
+.team-formation-container {
+  background-color: #2b2b2b;
+  border: 1px solid #444;
+  padding: 15px;
+  border-radius: 10px;
 }
 
 .budget-container { 
