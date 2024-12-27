@@ -327,15 +327,15 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers, isPickTeamMode, se
           <span className="budget">Budget: £{totalCost.toFixed(1)}m</span>
           <div className="buttons-container">
           {isPickTeamMode ? (
-            <button className="edit-team-button" onClick={handleToggleMode}>
+            <button className="edit-team-button orange-hover" onClick={handleToggleMode}>
               Edit Team
             </button>
           ) : (
             <>
-              <button className="set-team-button" onClick={handleSetTeam}>
+              <button className="set-team-button orange-hover" onClick={handleSetTeam}>
                 Set Team
               </button>
-              <button className="clear-button" onClick={handleClearTeam}>
+              <button className="clear-button orange-hover" onClick={handleClearTeam}>
                 Clear
               </button>
             </>

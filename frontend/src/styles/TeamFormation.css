@@ -60,7 +60,7 @@
   font-weight: bold;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.1s ease, color 0.1s ease;
 }
 
 .edit-team-button, .set-team-button {
@@ -76,10 +76,10 @@
   font-weight: bold;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.1s ease, color 0.1s ease;
 }
 
-button:hover, a:hover {
+.orange-hover:hover {
   background: linear-gradient(90deg, #ffa467, #d35400);
   color: #fff; 
   box-shadow: 0 0 10px 2px #ffa467;
@@ -106,7 +106,7 @@ button:hover, a:hover {
 .player-slot {
   width: 5vw;
   height: 6.5vw;
-  border: 0.2vw solid #ccc;
+  border: 0.2vw solid #ed9f22;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -120,7 +120,7 @@ button:hover, a:hover {
   background-color: #ffc567;
   font-size: 0.9vw;
   opacity: 1;
-  transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+  transition: background-color 0.1s, border-color 0.1s, box-shadow 0.1s;
 }
 
 .player-slot:hover {
@@ -154,7 +154,8 @@ button:hover, a:hover {
 }
 
 .player-slot.active { 
-  border-color: red; 
+  border-color: rgb(255, 115, 0); 
+  box-shadow: 0 0 10px 2px #ffa467;
 }
 
 .player-slot.eligible { 
@@ -179,8 +180,8 @@ button:hover, a:hover {
   font-size: 0.6vw;
 }
 
-.player-slot span:not(:empty) + span { /* target only when the first span has content */
-  border-top: 1px solid #ccc;
+.player-slot span:not(:empty) + span {
+  border-top: 1px solid #ed9f22;
   padding-top: 1px;
   width: 100%; 
 }

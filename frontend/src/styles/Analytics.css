@@ -23,9 +23,13 @@
 
 .analytics-player-list {
     flex-grow: 1;
-    max-height: 28.5vw;
+    max-height: 28.8vw;
     overflow-y: auto;
     padding-right: 10px; 
+}
+
+.page-two-team {
+    max-height: 38.75vw;
 }
 
 .analytics-player-list::-webkit-scrollbar {
@@ -35,7 +39,7 @@
 .analytics-player-list::-webkit-scrollbar-thumb {
   background-color: #444;
   border-radius: 5px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.1s ease;
 }
 
 .analytics-player-list::-webkit-scrollbar-track {
@@ -52,7 +56,7 @@
     margin-bottom: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    transition: border-color 0.3s, box-shadow 0.3s;
+    transition: border-color 0.1s, box-shadow 0.1s;
     white-space: nowrap;
     overflow: hidden;
 }
@@ -91,7 +95,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.1s ease, color 0.1s ease;
 }
 
 .get-transfers-btn {
@@ -104,15 +108,157 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.1s ease, color 0.1s ease;
     font-weight: bold;
     font-size: 0.9rem;
 }
 
+.get-transfers-btn:disabled {
+    background: #787878;
+    color: #1e1e1e;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
 .info-container {
-    padding-bottom: 0.3rem;
+    padding-bottom: 0.1rem;
 }
 
 .info-container2 {
     padding-bottom: 1rem;
+}
+
+.transfer-out {
+    background-color: rgb(255, 114, 114);
+    border: 0.2vw solid rgb(255, 57, 57);
+}
+
+.transfer-out span:not(:empty) + span {
+    border-top: 1px solid rgb(255, 57, 57);
+    padding-top: 1px;
+    width: 100%; 
+}
+
+.transfer-out:hover {
+    background-color: rgb(255, 186, 186); 
+    box-shadow: 0 0 10px 2px rgb(255, 57, 57);
+}
+
+.transfer-in {
+    background-color: rgb(122, 238, 107);
+    border: 0.2vw solid rgb(31, 156, 14);
+}
+
+.transfer-in span:not(:empty) + span {
+    border-top: 1px solid rgb(31, 156, 14);
+    padding-top: 1px;
+    width: 100%; 
+}
+
+.transfer-in:hover {
+    background-color: rgb(207, 255, 200); 
+    box-shadow: 0 0 10px 2px rgb(31, 156, 14);
+}
+
+.transfer {
+    background-color: #3a3a3a;
+    border: 1px solid #555;
+    padding: 15px;
+    margin-bottom: 0.6rem;
+    border-radius: 7px;
+}
+
+.transfer-body {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 1rem;
+}
+
+.transfer-name {
+    font-size: medium;
+    padding-bottom: 0.7rem;
+}
+
+.transfer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.transfer-score {
+    font-size: small;
+    padding-top: 0.5rem;
+}
+
+.switch-icon {
+    padding-top: 2.4rem;
+}
+
+.transfer-list {
+    flex-grow: 1;
+    max-height: 29.1vw;
+    overflow-y: auto;
+    padding-right: 10px; 
+}
+
+.transfer-list::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+.transfer-list::-webkit-scrollbar-thumb {
+  background-color: #444;
+  border-radius: 5px;
+  transition: background-color 0.1s ease;
+}
+
+.transfer-list::-webkit-scrollbar-track {
+  background-color: #1e1e1e;
+}
+
+.transfer-list::-webkit-scrollbar-thumb:hover {
+  background-color: #888; 
+}
+
+.page-btn-container {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 0.75rem;
+    padding-bottom: 0.25rem;
+}
+
+.transfers, .loading-container {
+    margin-top: 2rem;
+}
+
+.page-button {
+    background-color: #121212;
+    border: none;
+    color: #777; 
+    padding: 0.35rem 0.75rem;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: large;
+    cursor: pointer;
+    border-radius: 50%; 
+    transition: background-color 0.1s; 
+}
+
+.page-button:hover {
+    background-color: #989898; 
+}
+  
+.page-button span {
+    font-weight: bold; 
+    font-family: monospace;
+}
+
+.page-button:disabled {
+    background-color: #202020;
+    color: #333;
+}
+
+.page-button:disabled:hover {
+    background-color: #202020;
 }
