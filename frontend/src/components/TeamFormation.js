@@ -5,6 +5,103 @@ import substitutionIcon from "../images/substitution.png";
 import redxIcon from "../images/red_x.png";
 import jerseyImages from '../helpers/jerseyImages';
 
+export const showPlayerInfo = (player) => {
+  Swal.fire({
+    html: `
+      <style>
+        .tooltip-trigger {
+          position: relative;
+          display: inline-block;
+        }
+
+        .tooltip-text {
+          visibility: hidden;
+          width: 100px;
+          background-color: #555;
+          color: #fff;
+          text-align: center;
+          padding: 5px;
+          border-radius: 6px;
+          position: absolute;
+          z-index: 1;
+          bottom: 125%; /* Position the tooltip above the text */
+          left: 50%;
+          margin-left: -60px; /* Center the tooltip */
+          opacity: 0;
+          transition: opacity 0.3s;
+          font-size: 0.8rem;
+          font-weight: normal;
+        }
+
+        .tooltip-trigger:hover .tooltip-text {
+          visibility: visible;
+          opacity: 1;
+        }
+      </style>
+
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+        <!-- Vertical Stack: Position, Name, Team -->
+        <div style="text-align: center;">
+          <p style="margin: 0; font-size: 1.2em;">
+            ${["GKP", "DEF", "MID", "FWD"][player.position - 1]}
+          </p>
+          <p style="margin: 0; font-size: 1.5em; font-weight: bold;">${player.name}</p>
+          <p style="margin: 0; font-size: 1em; color: gray;">${player.team}</p>
+        </div>
+        
+        <!-- Horizontal Stack: Other Stats -->
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.7rem; text-align: center; width: 100%">
+          <div>
+            <p style="margin: 0; font-weight: bold;">Price</p>
+            <p style="margin: 0;">£${player.price.toFixed(1)}m</p>
+          </div>
+          <div style="border-left: 1px solid #ddd; padding-left: 0.7rem;">
+            <p style="margin: 0; font-weight: bold;">Form</p>
+            <p style="margin: 0;">${player.form}</p>
+          </div>
+          <div style="border-left: 1px solid #ddd; padding-left: 0.7rem;">
+            <p style="margin: 0; font-weight: bold;">Pts/Match</p>
+            <p style="margin: 0;">${player.pts_per_match}</p>
+          </div>
+          <div style="border-left: 1px solid #ddd; padding-left: 0.7rem;">
+            <p style="margin: 0; font-weight: bold;">Total Points</p>
+            <p style="margin: 0;">${player.total_pts}</p>
+          </div>
+          <div style="border-left: 1px solid #ddd; padding-left: 0.7rem;">
+            <p style="margin: 0; font-weight: bold;">Bonus</p>
+            <p style="margin: 0;">${player.total_bonus}</p>
+          </div>
+          <div style="border-left: 1px solid #ddd; padding-left: 0.7rem;">
+            <p style="margin: 0; font-weight: bold;" class="tooltip-trigger">
+              ICT Index
+              <span class="tooltip-text">Influence, Creativity, and Threat Rating</span>
+            </p>
+            <p style="margin: 0;">${player.ict_index}</p>
+          </div>
+          <div style="border-left: 1px solid #ddd; padding-left: 0.7rem;">
+            <p style="margin: 0; font-weight: bold;" class="tooltip-trigger">
+              TSB%
+              <span class="tooltip-text">Teams Selected By Percentage</span>
+            </p>
+            <p style="margin: 0;">${player["tsb_percent"]}%</p>
+          </div>
+          <div style="border-left: 1px solid #ddd; padding-left: 0.7rem;">
+            <p style="margin: 0; font-weight: bold;" class="tooltip-trigger">
+              FDR
+              <span class="tooltip-text">Fixture Difficulty Rating</span>
+            </p>
+            <p style="margin: 0;">${player["fdr"]}</p>
+          </div>
+        </div>
+      </div>
+    `,
+    showConfirmButton: true,
+    confirmButtonText: "Close",
+    width: 800,
+    padding: "1.5rem",
+  });
+};
+
 function TeamFormation({ selectedPlayers, setSelectedPlayers, isPickTeamMode, setIsPickTeamMode }) {
   const [activePlayer, setActivePlayer] = useState(null);
   const [previousFormation, setPreviousFormation] = useState(null);
@@ -218,104 +315,7 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers, isPickTeamMode, se
         })}
       </div>
     );
-  };  
-
-  const showPlayerInfo = (player) => {
-    Swal.fire({
-      html: `
-        <style>
-          .tooltip-trigger {
-            position: relative;
-            display: inline-block;
-          }
-
-          .tooltip-text {
-            visibility: hidden;
-            width: 100px;
-            background-color: #555;
-            color: #fff;
-            text-align: center;
-            padding: 5px;
-            border-radius: 6px;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%; /* Position the tooltip above the text */
-            left: 50%;
-            margin-left: -60px; /* Center the tooltip */
-            opacity: 0;
-            transition: opacity 0.3s;
-            font-size: 0.8rem;
-            font-weight: normal;
-          }
-
-          .tooltip-trigger:hover .tooltip-text {
-            visibility: visible;
-            opacity: 1;
-          }
-        </style>
-
-        <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
-          <!-- Vertical Stack: Position, Name, Team -->
-          <div style="text-align: center;">
-            <p style="margin: 0; font-size: 1.2em;">
-              ${["GKP", "DEF", "MID", "FWD"][player.position - 1]}
-            </p>
-            <p style="margin: 0; font-size: 1.5em; font-weight: bold;">${player.name}</p>
-            <p style="margin: 0; font-size: 1em; color: gray;">${player.team}</p>
-          </div>
-          
-          <!-- Horizontal Stack: Other Stats -->
-          <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.7rem; text-align: center; width: 100%">
-            <div>
-              <p style="margin: 0; font-weight: bold;">Price</p>
-              <p style="margin: 0;">£${player.price.toFixed(1)}m</p>
-            </div>
-            <div style="border-left: 1px solid #ddd; padding-left: 0.7rem;">
-              <p style="margin: 0; font-weight: bold;">Form</p>
-              <p style="margin: 0;">${player.form}</p>
-            </div>
-            <div style="border-left: 1px solid #ddd; padding-left: 0.7rem;">
-              <p style="margin: 0; font-weight: bold;">Pts/Match</p>
-              <p style="margin: 0;">${player.pts_per_match}</p>
-            </div>
-            <div style="border-left: 1px solid #ddd; padding-left: 0.7rem;">
-              <p style="margin: 0; font-weight: bold;">Total Points</p>
-              <p style="margin: 0;">${player.total_pts}</p>
-            </div>
-            <div style="border-left: 1px solid #ddd; padding-left: 0.7rem;">
-              <p style="margin: 0; font-weight: bold;">Bonus</p>
-              <p style="margin: 0;">${player.total_bonus}</p>
-            </div>
-            <div style="border-left: 1px solid #ddd; padding-left: 0.7rem;">
-              <p style="margin: 0; font-weight: bold;" class="tooltip-trigger">
-                ICT Index
-                <span class="tooltip-text">Influence, Creativity, and Threat Rating</span>
-              </p>
-              <p style="margin: 0;">${player.ict_index}</p>
-            </div>
-            <div style="border-left: 1px solid #ddd; padding-left: 0.7rem;">
-              <p style="margin: 0; font-weight: bold;" class="tooltip-trigger">
-                TSB%
-                <span class="tooltip-text">Teams Selected By Percentage</span>
-              </p>
-              <p style="margin: 0;">${player["tsb_percent"]}%</p>
-            </div>
-            <div style="border-left: 1px solid #ddd; padding-left: 0.7rem;">
-              <p style="margin: 0; font-weight: bold;" class="tooltip-trigger">
-                FDR
-                <span class="tooltip-text">Fixture Difficulty Rating</span>
-              </p>
-              <p style="margin: 0;">${player["fdr"]}</p>
-            </div>
-          </div>
-        </div>
-      `,
-      showConfirmButton: true,
-      confirmButtonText: "Close",
-      width: 800,
-      padding: "1.5rem",
-    });
-  };  
+  };    
 
   return (
     <div className={`middle-column ${isPickTeamMode ? 'pick-team-mode' : ''}`}>

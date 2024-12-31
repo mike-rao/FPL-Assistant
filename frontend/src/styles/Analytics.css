@@ -59,6 +59,16 @@
     transition: border-color 0.1s, box-shadow 0.1s;
     white-space: nowrap;
     overflow: hidden;
+    display: flex;
+}
+
+.analytics-player-list > div:hover {
+    background-color: #888;
+    box-shadow: 0 0 8px #888; 
+}
+
+.player-xpts {
+    margin-left: auto;
 }
 
 .transfer-info, .transfer-info2 {
@@ -198,6 +208,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 .transfer-list {
     flex-grow: 1;
     max-height: 29.1vw;
+    min-height: 29.1vw;
     overflow-y: auto;
     padding-right: 10px; 
 }
