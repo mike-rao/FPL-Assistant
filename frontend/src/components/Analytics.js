@@ -3,7 +3,7 @@ import "../styles/Analytics.css";
 import jerseyImages from '../helpers/jerseyImages';
 import {showPlayerInfo} from "./TeamFormation";
 
-function Analytics({ selectedPlayers, isPickTeamMode }) {
+function Analytics({ selectedPlayers, setSelectedPlayers, isPickTeamMode }) {
   const [freeTransfers, setFreeTransfers] = useState(0);
   const [transferBudget, setTransferBudget] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -84,6 +84,27 @@ function Analytics({ selectedPlayers, isPickTeamMode }) {
     setIsFirstPage(!isFirstPage);
   }
 
+  const handleTransferAccept = (player_in, player_out) => {
+    setSelectedPlayers((prevPlayers) =>
+      prevPlayers.map((player) =>
+        player.name === player_out.name ? player_in : player
+      )
+    );
+    setplayersWithXpts((prevPlayers) =>
+      prevPlayers.map((player) =>
+        player.name === player_out.name ? player_in : player
+      )
+    );
+    console.log(playersWithXpts);
+    setTransfers((prevSuggestions) =>
+      prevSuggestions.filter(
+        (suggestion) =>
+          suggestion.transfer_in.name !== player_in.name ||
+          suggestion.transfer_out.name !== player_out.name
+      )
+    );
+  }
+
   const getJerseyImage = (player) => {
     if (!player) return jerseyImages['Unknown'];
     if (player.position === 1 || player.position === "Goalkeeper") {
@@ -149,6 +170,9 @@ function Analytics({ selectedPlayers, isPickTeamMode }) {
             </div>
             <div className="transfer-score">x{players.transfer_in.predicted_points}</div>
           </div>
+        </div>
+        <div className="accept-btn-container">
+          <button className="accept-btn orange-hover" onClick={() => handleTransferAccept(players.transfer_in, players.transfer_out)}>Accept</button>
         </div>
       </div>
     );

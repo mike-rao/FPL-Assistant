@@ -176,6 +176,8 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     padding: 15px;
     margin-bottom: 0.6rem;
     border-radius: 7px;
+    display: flex;
+    flex-direction: column;
 }
 
 .transfer-body {
@@ -272,4 +274,25 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 
 .page-button:disabled:hover {
     background-color: #202020;
+}
+
+.accept-btn-container {
+    margin-left: auto;
+    margin-top: 1vw;
+    margin-right: 1vw;
+}
+
+.accept-btn {
+    width: 4vw;
+    height: 2vw;
+    min-width: 60px;
+    min-height: 15px;
+    color: #1e1e1e;
+    background: linear-gradient(90deg, #ffcf81, #f39c12);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.1s ease, color 0.1s ease;
+    font-weight: bold;
+    font-size: 0.9rem;
 }

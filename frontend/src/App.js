@@ -90,6 +90,7 @@ function App() {
         />
         <Analytics 
           selectedPlayers={selectedPlayers}
+          setSelectedPlayers={setSelectedPlayers}
           isPickTeamMode={isPickTeamMode}
         />
       </div>
