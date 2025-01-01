@@ -132,7 +132,7 @@ function Analytics({ selectedPlayers, isPickTeamMode }) {
             <div className="transfer-score">x{players.transfer_out.predicted_points}</div>
           </div>
           <div className="switch-icon">
-            <div>{"-->"}</div>
+            <div>{"→"}</div>
           </div>
           <div className="transfer-container">
             <div className="player-slot transfer-in" onClick={() => {showPlayerInfo(players.transfer_in);}}>
