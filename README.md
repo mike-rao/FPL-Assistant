@@ -18,7 +18,7 @@ The backend is implemented using Flask, a Python microframework. It provides RES
 - Scraping Player Stats - the /scrape-and-save endpoint scrapes FPL player statistics from the official premier league website and stores them in the database
 - Fetching Players - the /players endpoint retrieves player data from the database for frontend display.
 - Predicting Player Points - the /predict-pts endpoint predicts the amount of points a player will score the next week using a machine learning model trained on player statistics.
-- Generating Transfers - the /suggest-transfers endpoint calculates optimal transfer suggestions based on an algorithm to bring in the best net of predicted points.
+- Generating Transfers - the /suggest-transfers endpoint calculates optimal transfer suggestions using hash maps, sorted lists, and a greedy algorithm to bring in the best net of predicted points.
 
 ## Database Integration
 

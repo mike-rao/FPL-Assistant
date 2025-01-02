@@ -40,7 +40,7 @@ def predict_player_pts():
         return jsonify({"error": f"Failed to predict player pts: {e}"}), 500
     
 @app.route('/suggest-transfers', methods=['POST'])
-def suggest_transfers_api():
+def suggest_transfers():
     try:
         data = request.json
         current_team = data.get("current_team", [])
@@ -54,9 +54,6 @@ def suggest_transfers_api():
             return jsonify({"error": "Invalid input data"}), 400
         
         transfer_suggestions = suggest_transfers(current_team, free_transfers, transfer_budget, player_dataset)
-        position_mapping = {"Goalkeeper": 1,"Defender": 2,"Midfielder": 3,"Forward": 4}
-        for transfer in transfer_suggestions:
-            transfer["transfer_in"]["position"] = position_mapping.get(transfer["transfer_in"]["position"])
         sorted_transfers = sorted(
             transfer_suggestions,
             key=lambda x: x["transfer_in"]["predicted_points"] - x["transfer_out"]["predicted_points"],

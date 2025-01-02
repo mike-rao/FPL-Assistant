@@ -23,61 +23,60 @@ def predict_player_points(player_data):
 
 def suggest_transfers(current_team, free_transfers, transfer_budget, player_dataset):
     """
-    Suggest transfers to maximize points within budget.
+    Suggest transfers to maximize predicted points gain within budget constraints.
     """
-    def find_replacements(player, budget):
-        position_mapping = {
-            1: "Goalkeeper",
-            2: "Defender",
-            3: "Midfielder",
-            4: "Forward"
-        }
-        player_position = position_mapping.get(player["position"]) 
-        filter1 = list(filter(lambda p: p["position"] == player_position, player_dataset))
-        filter2 = list(filter(lambda p: p["price"] <= player["price"] + budget, filter1))
-        filter3 = list(filter(lambda p: p["name"] not in ([n["name"] for n in current_team]), filter2))
-        eligible_players = list(filter(lambda p: p["name"] not in ([n["name"] for n in transfered_out]), filter3))
-        return sorted(eligible_players, key=lambda p: p["predicted_points"])
+    from collections import defaultdict
+    
+    position_mapping = {"Goalkeeper": 1,"Defender": 2,"Midfielder": 3,"Forward": 4}
+    for player in player_dataset:
+        player["position"] = position_mapping.get(player["position"])
+    
+    players_by_position = defaultdict(list)
+    for player in player_dataset:
+        players_by_position[player["position"]].append(player)
+    
+    for position in players_by_position:
+        players_by_position[position].sort(key=lambda p: p["predicted_points"], reverse=True)
+
+    def find_best_replacement(player, remaining_budget):
+        eligible_players = players_by_position.get(player["position"], [])
+        for replacement in eligible_players:
+            if replacement["price"] <= player["price"] + remaining_budget and replacement["name"] not in current_names:
+                print(f"Selected replacement: {replacement['name']} for {player['name']}")
+                return replacement
+        print(f"No replacements found for player: {player['name']}")
+        return None
 
     transfers = []
-    transfered_out = []
+    current_names = {player["name"] for player in current_team}
     remaining_budget = transfer_budget
+
     for _ in range(free_transfers):
         best_transfer = None
         best_gain = -float("inf")
         for player in current_team:
-            replacements = find_replacements(player, remaining_budget)
-            if len(replacements) > 0:
-                replacement = replacements[0]
-                player["predicted_points"] = list(filter(lambda p: p["name"] == player["name"], player_dataset))[0]["predicted_points"]
+            replacement = find_best_replacement(player, remaining_budget)
+            player["predicted_points"] = list(filter(lambda p: p["name"] == player["name"], player_dataset))[0]["predicted_points"]
+            if replacement:
                 gain = replacement["predicted_points"] - player["predicted_points"]
-
                 if gain > best_gain:
                     best_gain = gain
                     best_transfer = {
                         "transfer_out": player,
                         "transfer_in": replacement
                     }
+        if not best_transfer:
+            break
 
-        if best_transfer:
-            transfers.append(best_transfer)
-            remaining_budget -= best_transfer["transfer_in"]["price"] - best_transfer["transfer_out"]["price"]
-            current_team.remove(best_transfer["transfer_out"])
-            current_team.append(best_transfer["transfer_in"])
-            transfered_out.append(best_transfer["transfer_out"])
-            print(best_transfer["transfer_in"]["name"], "net gain:", best_transfer["transfer_in"]["predicted_points"] - best_transfer["transfer_out"]["predicted_points"])
+        transfers.append(best_transfer)
+        remaining_budget -= best_transfer["transfer_in"]["price"] - best_transfer["transfer_out"]["price"]
+        current_team.remove(best_transfer["transfer_out"])
+        current_team.append(best_transfer["transfer_in"])
+        current_names.add(best_transfer["transfer_in"]["name"])
+
+        print(f"Transfer Out: {best_transfer['transfer_out']['name']} ({best_transfer['transfer_out']['predicted_points']} pts) -> ")
+        print(f"Transfer In: {best_transfer['transfer_in']['name']} ({best_transfer['transfer_in']['predicted_points']} pts) | ")
+        print(f"Net Gain: {best_gain:.2f}")
+        print(best_transfer["transfer_in"]["position"])
 
     return transfers
-
-
-# Testing
-# player = {
-#     'form': 4.4,
-#     'pts_per_match': 5.6,
-#     'total_pts': 90,
-#     'ict_index': 91.6,
-#     'tsb_percent': 24.1,
-#     'fdr': 3
-# }
-# predicted_points = predict_player_points(player)
-# print(f"Predicted Points for Next Week: {predicted_points}")

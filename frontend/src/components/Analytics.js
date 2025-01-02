@@ -24,6 +24,7 @@ function Analytics({ selectedPlayers, setSelectedPlayers, isPickTeamMode }) {
         });
         const data = await response.json();
         setplayersWithXpts(data);
+        console.log(selectedPlayers);
       } catch (error) {
         console.error("Error fetching predicted player pts:", error);
       }
@@ -95,7 +96,7 @@ function Analytics({ selectedPlayers, setSelectedPlayers, isPickTeamMode }) {
         player.name === player_out.name ? player_in : player
       )
     );
-    console.log(playersWithXpts);
+    console.log(selectedPlayers);
     setTransfers((prevSuggestions) =>
       prevSuggestions.filter(
         (suggestion) =>
@@ -116,7 +117,7 @@ function Analytics({ selectedPlayers, setSelectedPlayers, isPickTeamMode }) {
   const isGetTransfersEnabled = freeTransfers > 0 && transferBudget >= 0;
 
   const calculateTeamXpts = () => {
-    return playersWithXpts.slice(0,11).reduce((sum, player) => sum + (player.xpts || 0), 0).toFixed(2);
+    return (playersWithXpts.reduce((sum, player) => sum + (player.xpts || 0), 0) * 11/15).toFixed(2);
   };
 
   const isFullTeam = isPickTeamMode && selectedPlayers.length === 15;
