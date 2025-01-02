@@ -40,7 +40,7 @@ def predict_player_pts():
         return jsonify({"error": f"Failed to predict player pts: {e}"}), 500
     
 @app.route('/suggest-transfers', methods=['POST'])
-def suggest_transfers():
+def suggest_player_transfers():
     try:
         data = request.json
         current_team = data.get("current_team", [])

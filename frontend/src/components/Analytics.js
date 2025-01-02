@@ -24,7 +24,6 @@ function Analytics({ selectedPlayers, setSelectedPlayers, isPickTeamMode }) {
         });
         const data = await response.json();
         setplayersWithXpts(data);
-        console.log(selectedPlayers);
       } catch (error) {
         console.error("Error fetching predicted player pts:", error);
       }

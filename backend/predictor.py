@@ -26,15 +26,12 @@ def suggest_transfers(current_team, free_transfers, transfer_budget, player_data
     Suggest transfers to maximize predicted points gain within budget constraints.
     """
     from collections import defaultdict
-    
     position_mapping = {"Goalkeeper": 1,"Defender": 2,"Midfielder": 3,"Forward": 4}
     for player in player_dataset:
         player["position"] = position_mapping.get(player["position"])
-    
     players_by_position = defaultdict(list)
     for player in player_dataset:
         players_by_position[player["position"]].append(player)
-    
     for position in players_by_position:
         players_by_position[position].sort(key=lambda p: p["predicted_points"], reverse=True)
 
@@ -77,6 +74,5 @@ def suggest_transfers(current_team, free_transfers, transfer_budget, player_data
         print(f"Transfer Out: {best_transfer['transfer_out']['name']} ({best_transfer['transfer_out']['predicted_points']} pts) -> ")
         print(f"Transfer In: {best_transfer['transfer_in']['name']} ({best_transfer['transfer_in']['predicted_points']} pts) | ")
         print(f"Net Gain: {best_gain:.2f}")
-        print(best_transfer["transfer_in"]["position"])
 
     return transfers
