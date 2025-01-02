@@ -20,10 +20,6 @@ The backend is implemented using Flask, a Python microframework. It provides RES
 - Predicting Player Points - the /predict-pts endpoint predicts the amount of points a player will score the next week using a machine learning model trained on player statistics.
 - Generating Transfers - the /suggest-transfers endpoint calculates optimal transfer suggestions using hash maps, sorted lists, and a greedy algorithm to bring in the best net of predicted points.
 
-## Database Integration
-
-The PostgreSQL database serves as the backbone for storing and retrieving player data. Tables are structured to hold player attributes such as name, position, team, price, form, and predicted points. SQLAlchemy, a Python ORM, facilitates seamless database interaction, ensuring efficiency and maintainability.
-
 ## Machine Learning Integration
 
 A machine learning model is implemented to predict weekly FPL points for players based on historical data. Features include:
@@ -31,6 +27,10 @@ A machine learning model is implemented to predict weekly FPL points for players
 - Target Variable - points scored in the upcoming gameweek.
 - Algorithm - a Random Forest Regressor, chosen for its ability to handle complex relationships and feature importance.
 The model is trained on historical player data scraped from the Premier League website and stored in the PostgreSQL database. Predictions are generated using the trained model during transfer calculations, helping users optimize their team lineup.
+
+## Database Integration
+
+The PostgreSQL database serves as the backbone for storing and retrieving player data. Tables are structured to hold player attributes such as name, position, team, price, form, and predicted points. SQLAlchemy, a Python ORM, facilitates seamless database interaction, ensuring efficiency and maintainability.
 
 
 This development approach combines robust technology stacks with thoughtful design and user-centric features to create a powerful assistant for FPL players.
