@@ -8,7 +8,7 @@ import joblib
 
 data = pd.read_csv('fpl_player_data.csv')
 
-X = data[['position', 'form', 'pts_per_match', 'total_pts', 'total_bonus', 'ict_index', 'tsb_percent', 'fdr']]
+X = data[['position', 'form', 'total_pts', 'total_bonus', 'ict_index', 'tsb_percent', 'fdr']]
 y = data['pts_scored']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)

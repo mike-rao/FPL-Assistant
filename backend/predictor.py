@@ -5,7 +5,7 @@ player_dataset = get_players_from_db()
 def predict_player_points(player_data):
     """
     Predict FPL points for a given player using the trained model.
-    player_data: dict with keys ['position', 'form', 'pts_per_match', 'total_pts', 'total_bonus', 'ict_index', 'tsb_percent', 'fdr']
+    player_data: dict with keys ['position', 'form', 'total_pts', 'total_bonus', 'ict_index', 'tsb_percent', 'fdr']
     """
     import joblib
     import pandas as pd
@@ -16,7 +16,6 @@ def predict_player_points(player_data):
     features = pd.DataFrame([{
         'position': player_data['position'],
         'form': player_data['form'],
-        'pts_per_match': player_data['pts_per_match'],
         'total_pts': player_data['total_pts'],
         'total_bonus': player_data['total_bonus'],
         'ict_index': player_data['ict_index'],
