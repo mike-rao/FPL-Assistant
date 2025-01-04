@@ -46,12 +46,12 @@ def suggest_player_transfers():
         current_team = data.get("current_team", [])
         free_transfers = data.get("free_transfers", 0)
         transfer_budget = data.get("transfer_budget", 0.0)
-        player_dataset = get_players_from_db()
-        for player in player_dataset:
-            player["predicted_points"] = predict_player_points(player)
         
-        if not current_team or free_transfers <= 0:
-            return jsonify({"error": "Invalid input data"}), 400
+        player_dataset = get_players_from_db()
+        position_mapping = {"Goalkeeper": 1,"Defender": 2,"Midfielder": 3,"Forward": 4}
+        for player in player_dataset:
+            player["position"] = position_mapping.get(player["position"])
+            player["predicted_points"] = predict_player_points(player)
         
         transfer_suggestions = suggest_transfers(current_team, free_transfers, transfer_budget, player_dataset)
         sorted_transfers = sorted(

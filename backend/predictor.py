@@ -1,24 +1,32 @@
-import joblib
-import pandas as pd
 from database import get_players_from_db
 
-model = joblib.load('fpl_model.pkl')
-player_dataset = get_players_from_db
+player_dataset = get_players_from_db()
 
 def predict_player_points(player_data):
     """
     Predict FPL points for a given player using the trained model.
-    player_data: dict with keys ['form', 'pts_per_match', 'total_pts', 'ict_index', 'tsb_percent', 'fdr']
+    player_data: dict with keys ['position', 'form', 'pts_per_match', 'total_pts', 'total_bonus', 'ict_index', 'tsb_percent', 'fdr']
     """
+    import joblib
+    import pandas as pd
+    
+    model = joblib.load('fpl_model.pkl')
+    scaler = joblib.load('scaler.pkl')
+    
     features = pd.DataFrame([{
+        'position': player_data['position'],
         'form': player_data['form'],
         'pts_per_match': player_data['pts_per_match'],
         'total_pts': player_data['total_pts'],
+        'total_bonus': player_data['total_bonus'],
         'ict_index': player_data['ict_index'],
         'tsb_percent': player_data['tsb_percent'],
         'fdr': player_data['fdr']
     }])
-    predicted_points = model.predict(features)
+    
+    scaled_features = scaler.transform(features)
+    
+    predicted_points = model.predict(scaled_features)
     return predicted_points[0]
 
 def suggest_transfers(current_team, free_transfers, transfer_budget, player_dataset):
@@ -26,15 +34,14 @@ def suggest_transfers(current_team, free_transfers, transfer_budget, player_data
     Suggest transfers to maximize predicted points gain within budget constraints.
     """
     from collections import defaultdict
-    position_mapping = {"Goalkeeper": 1,"Defender": 2,"Midfielder": 3,"Forward": 4}
-    for player in player_dataset:
-        player["position"] = position_mapping.get(player["position"])
+        
     players_by_position = defaultdict(list)
     for player in player_dataset:
         players_by_position[player["position"]].append(player)
+        
     for position in players_by_position:
         players_by_position[position].sort(key=lambda p: p["predicted_points"], reverse=True)
-
+    
     def find_best_replacement(player, remaining_budget):
         eligible_players = players_by_position.get(player["position"], [])
         for replacement in eligible_players:
@@ -64,7 +71,7 @@ def suggest_transfers(current_team, free_transfers, transfer_budget, player_data
                     }
         if not best_transfer:
             break
-
+        
         transfers.append(best_transfer)
         remaining_budget -= best_transfer["transfer_in"]["price"] - best_transfer["transfer_out"]["price"]
         current_team.remove(best_transfer["transfer_out"])

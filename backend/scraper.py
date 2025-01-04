@@ -17,6 +17,9 @@ def scrape_stats():
     try:
         driver.get(url)
         stats = []
+        
+        file = open("fpl_player_data.csv", "w", encoding="utf-8")
+        file.write("player,week,position,form,pts_per_match,total_pts,total_bonus,ict_index,tsb_percent,fdr,pts_scored\n")
 
         cookie_btn = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "onetrust-accept-btn-handler")))
         cookie_btn.click()
@@ -36,23 +39,49 @@ def scrape_stats():
                     WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "ElementDialogButton__StyledElementDialogButton-sc-1vrzlgb-0.irVYoY")))
                     info_button.click()
                     popup = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "root-dialog")))
+                    
                     name = popup.find_element(By.CLASS_NAME, "styles__ElementHeading-sc-ahs9zc-5.gwmHpL").text
                     display_name = row.find_element(By.CLASS_NAME, "ElementInTable__Name-sc-y9xi40-1.WjUOj").text
+                    position = popup.find_element(By.CLASS_NAME, "styles__ElementTypeLabel-sc-ahs9zc-4.kDMSIW").text
+                    form = float(popup.find_elements(By.CLASS_NAME, "styles__StatValue-sc-1tsp201-2.fgGEXH")[1].text)
+                    pts_per_match = float(popup.find_elements(By.CLASS_NAME, "styles__StatValue-sc-1tsp201-2.fgGEXH")[2].text)
+                    total_pts = int(popup.find_elements(By.CLASS_NAME, "styles__StatValue-sc-1tsp201-2.fgGEXH")[4].text)
+                    total_bonus = int(popup.find_elements(By.CLASS_NAME, "styles__StatValue-sc-1tsp201-2.fgGEXH")[5].text)
+                    ict_index = float(popup.find_elements(By.CLASS_NAME, "styles__StatValue-sc-1tsp201-2.fgGEXH")[6].text)
+                    tsb_percent = float(popup.find_elements(By.CLASS_NAME, "styles__StatValue-sc-1tsp201-2.fgGEXH")[7].text[:-1])
+                    fdr = int(WebDriverWait(driver, 10).until(EC.presence_of_element_located(("xpath", "//*[starts-with(@class, 'FixtureDifficulty__StyledFixtureDifficulty')]"))).text)
 
                     stats.append({
                         "name": name,
                         "display_name": display_name,
                         "team": popup.find_element(By.CLASS_NAME, "styles__Club-sc-ahs9zc-6.eiknRS").text,
-                        "position": popup.find_element(By.CLASS_NAME, "styles__ElementTypeLabel-sc-ahs9zc-4.kDMSIW").text,
+                        "position": position,
                         "price": float(popup.find_elements(By.CLASS_NAME, "styles__StatValue-sc-1tsp201-2.fgGEXH")[0].text[1:-1]),
-                        "form": float(popup.find_elements(By.CLASS_NAME, "styles__StatValue-sc-1tsp201-2.fgGEXH")[1].text),
-                        "pts_per_match": float(popup.find_elements(By.CLASS_NAME, "styles__StatValue-sc-1tsp201-2.fgGEXH")[2].text),
-                        "total_pts": int(popup.find_elements(By.CLASS_NAME, "styles__StatValue-sc-1tsp201-2.fgGEXH")[4].text),
-                        "total_bonus": int(popup.find_elements(By.CLASS_NAME, "styles__StatValue-sc-1tsp201-2.fgGEXH")[5].text),
-                        "ict_index": float(popup.find_elements(By.CLASS_NAME, "styles__StatValue-sc-1tsp201-2.fgGEXH")[6].text),
-                        "tsb_percent": float(popup.find_elements(By.CLASS_NAME, "styles__StatValue-sc-1tsp201-2.fgGEXH")[7].text[:-1]),
-                        "fdr": int(WebDriverWait(driver, 10).until(EC.presence_of_element_located(("xpath", "//*[starts-with(@class, 'FixtureDifficulty__StyledFixtureDifficulty')]"))).text)
+                        "form": form,
+                        "pts_per_match": pts_per_match,
+                        "total_pts": total_pts,
+                        "total_bonus": total_bonus,
+                        "ict_index": ict_index,
+                        "tsb_percent": tsb_percent,
+                        "fdr": fdr
                     })
+                    
+                    week = popup.find_elements(By.CLASS_NAME, "ElementMatchGroup__MatchEvent-sc-1g84hxt-6.udNKS")[3].text
+                    pts_scored = popup.find_elements(By.CLASS_NAME, "ElementMatchGroup__HistoryPts-sc-1g84hxt-8.fKkKKe")[2].text
+                    
+                    def get_digits(string):
+                        num = ""
+                        for letter in string:
+                            if letter.isdigit():
+                                num += letter
+                        return num
+                    
+                    week = get_digits(week)
+                    pts_scored = get_digits(pts_scored)
+                    position_mapping = {"Goalkeeper": 1,"Defender": 2,"Midfielder": 3,"Forward": 4}
+                    position = position_mapping.get(position)
+                    
+                    file.write(display_name+","+week+","+str(position)+","+str(form)+","+str(pts_per_match)+","+str(total_pts)+","+str(total_bonus)+","+str(ict_index)+","+str(tsb_percent)+","+str(fdr)+","+pts_scored+"\n")
 
                     popup.find_element(By.CLASS_NAME, "Dialog__CloseButton-sc-5bogmv-1.cgQMVU").click()
                     print(f"Popup for {name} closed.")
@@ -73,6 +102,7 @@ def scrape_stats():
                 break
 
         print("Scraping complete.")
+        file.close()
         return stats
 
     finally:

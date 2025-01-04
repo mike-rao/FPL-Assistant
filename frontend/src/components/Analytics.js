@@ -116,7 +116,7 @@ function Analytics({ selectedPlayers, setSelectedPlayers, isPickTeamMode }) {
   const isGetTransfersEnabled = freeTransfers > 0 && transferBudget >= 0;
 
   const calculateTeamXpts = () => {
-    return (playersWithXpts.reduce((sum, player) => sum + (player.xpts || 0), 0) * 11/15).toFixed(2);
+    return playersWithXpts.slice(0,11).reduce((sum, player) => sum + (player.xpts || 0), 0).toFixed(2);
   };
 
   const isFullTeam = isPickTeamMode && selectedPlayers.length === 15;
@@ -150,7 +150,7 @@ function Analytics({ selectedPlayers, setSelectedPlayers, isPickTeamMode }) {
               <span className="player-name">{players.transfer_out.display_name}</span>
               <span className = "player-team">{players.transfer_out.team}</span>
             </div>
-            <div className="transfer-score">x{players.transfer_out.predicted_points}</div>
+            <div className="transfer-score">x{players.transfer_out.predicted_points.toFixed(2)}</div>
           </div>
           <div className="switch-icon">
             <div>{"→"}</div>
@@ -168,7 +168,7 @@ function Analytics({ selectedPlayers, setSelectedPlayers, isPickTeamMode }) {
               <span className="player-name">{players.transfer_in.display_name}</span>
               <span className = "player-team">{players.transfer_in.team}</span>
             </div>
-            <div className="transfer-score">x{players.transfer_in.predicted_points}</div>
+            <div className="transfer-score">x{players.transfer_in.predicted_points.toFixed(2)}</div>
           </div>
         </div>
         <div className="accept-btn-container">

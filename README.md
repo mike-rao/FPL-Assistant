@@ -25,7 +25,7 @@ The backend is implemented using Flask, a Python microframework. It provides RES
 A machine learning model is implemented to predict weekly FPL points for players based on historical data. Features include:
 - Input Variables - player form, fixture difficulty rating (FDR), points per match, total points, ICT (impact creativity and threat) index, and team selected by percentage.
 - Target Variable - points scored in the upcoming gameweek.
-- Algorithm - a Random Forest Regressor, chosen for its ability to handle complex relationships and feature importance.
+- Model - a Multi-Layer Perceptron, chosen for its ability to handle complex relationships and feature importance.
 The model is trained on historical player data scraped from the Premier League website and stored in the PostgreSQL database. Predictions are generated using the trained model during transfer calculations, helping users optimize their team lineup.
 
 ## Database Integration
