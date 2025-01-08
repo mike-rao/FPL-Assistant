@@ -11,6 +11,7 @@ function App() {
   const [isPickTeamMode, setIsPickTeamMode] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [highlightedPlayers, setHighlightedPlayers] = useState([]);
 
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:5000";
 
@@ -87,11 +88,13 @@ function App() {
           setSelectedPlayers={setSelectedPlayers}
           isPickTeamMode={isPickTeamMode}
           setIsPickTeamMode={setIsPickTeamMode}
+          highlightedPlayers={highlightedPlayers}
         />
         <Analytics 
           selectedPlayers={selectedPlayers}
           setSelectedPlayers={setSelectedPlayers}
           isPickTeamMode={isPickTeamMode}
+          setHighlightedPlayers={setHighlightedPlayers}
         />
       </div>
     </div>

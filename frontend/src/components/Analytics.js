@@ -3,7 +3,7 @@ import "../styles/Analytics.css";
 import jerseyImages from '../helpers/jerseyImages';
 import {showPlayerInfo} from "./TeamFormation";
 
-function Analytics({ selectedPlayers, setSelectedPlayers, isPickTeamMode }) {
+function Analytics({ selectedPlayers, setSelectedPlayers, isPickTeamMode, setHighlightedPlayers }) {
   const [freeTransfers, setFreeTransfers] = useState(0);
   const [transferBudget, setTransferBudget] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -102,6 +102,12 @@ function Analytics({ selectedPlayers, setSelectedPlayers, isPickTeamMode }) {
           suggestion.transfer_out.name !== player_out.name
       )
     );
+    setHighlightedPlayers((prev) => [...prev, player_in.name]);
+    setTimeout(() => {
+      setHighlightedPlayers((prev) =>
+        prev.filter((name) => name !== player_in.name)
+      );
+    }, 1000);
   }
 
   const getJerseyImage = (player) => {
@@ -134,7 +140,7 @@ function Analytics({ selectedPlayers, setSelectedPlayers, isPickTeamMode }) {
   const Transfer = ({ players, index }) => {
     return (
       <div className="transfer">
-        <div className="transfer-name">{index}. {players.transfer_in.display_name}</div>
+        <div className="transfer-index">{index}.</div>
         <div className="transfer-body">
           <div className="transfer-container">
             <div className="player-slot transfer-out" onClick={() => {showPlayerInfo(players.transfer_out);}}>
@@ -151,8 +157,12 @@ function Analytics({ selectedPlayers, setSelectedPlayers, isPickTeamMode }) {
             </div>
             <div className="transfer-score">x{players.transfer_out.predicted_points.toFixed(2)}</div>
           </div>
-          <div className="switch-icon">
-            <div>{"→"}</div>
+          <div className="switch-container">
+            <div className="hidden">.</div>
+            <div className="switch-icon">{"→"}</div>
+            <div className="hidden">.</div>
+            <div className="hidden">.</div>
+            <div className="hidden">.</div>
           </div>
           <div className="transfer-container">
             <div className="player-slot transfer-in" onClick={() => {showPlayerInfo(players.transfer_in);}}>
@@ -168,10 +178,10 @@ function Analytics({ selectedPlayers, setSelectedPlayers, isPickTeamMode }) {
               <span className = "player-team">{players.transfer_in.team}</span>
             </div>
             <div className="transfer-score">x{players.transfer_in.predicted_points.toFixed(2)}</div>
+            <div className="accept-btn-container">
+              <button className="accept-btn orange-hover" onClick={() => handleTransferAccept(players.transfer_in, players.transfer_out)}>Accept</button>
+            </div>          
           </div>
-        </div>
-        <div className="accept-btn-container">
-          <button className="accept-btn orange-hover" onClick={() => handleTransferAccept(players.transfer_in, players.transfer_out)}>Accept</button>
         </div>
       </div>
     );

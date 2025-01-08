@@ -7,7 +7,8 @@
 }
 
 .set-team-msg {
-    font-size: x-large;
+    padding-top: 0.5rem;
+    font-size: 1.7rem;
     color: rgba(255, 255, 255, .3);
     font-weight: bold;
     text-align: center;
@@ -23,13 +24,14 @@
 
 .analytics-player-list {
     flex-grow: 1;
-    max-height: 28.8vw;
+    max-height: 32.2vw;
     overflow-y: auto;
     padding-right: 10px; 
 }
 
 .page-two-team {
-    max-height: 38.75vw;
+    max-height: 40.2vw;
+    min-height: 40.2vw;
 }
 
 .analytics-player-list::-webkit-scrollbar {
@@ -183,13 +185,12 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 .transfer-body {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    gap: 1rem;
+    justify-content: space-evenly;
 }
 
-.transfer-name {
-    font-size: medium;
-    padding-bottom: 0.7rem;
+.transfer-index {
+    font-size: 1.2rem;
+    padding-bottom: 1rem;
 }
 
 .transfer-container {
@@ -199,18 +200,24 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 }
 
 .transfer-score {
-    font-size: small;
+    font-size: 1rem;
     padding-top: 0.5rem;
 }
 
+.switch-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
 .switch-icon {
-    padding-top: 2.4rem;
+    font-size: 1.5rem;
 }
 
 .transfer-list {
     flex-grow: 1;
-    max-height: 29.1vw;
-    min-height: 29.1vw;
+    max-height: 32.2vw;
+    min-height: 32.2vw;
     overflow-y: auto;
     padding-right: 10px; 
 }
@@ -252,7 +259,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: large;
+    font-size: 1.2rem;
     cursor: pointer;
     border-radius: 50%; 
     transition: background-color 0.1s; 
@@ -277,16 +284,15 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 }
 
 .accept-btn-container {
-    margin-left: auto;
     margin-top: 1vw;
-    margin-right: 1vw;
 }
 
 .accept-btn {
-    width: 4vw;
+    width: 5vw;
     height: 2vw;
     min-width: 60px;
     min-height: 15px;
+    max-height: 30px;
     color: #1e1e1e;
     background: linear-gradient(90deg, #ffcf81, #f39c12);
     border: none;
@@ -295,4 +301,8 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     transition: background-color 0.1s ease, color 0.1s ease;
     font-weight: bold;
     font-size: 0.9rem;
+}
+
+.hidden {
+    visibility: hidden;
 }

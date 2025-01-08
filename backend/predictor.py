@@ -74,7 +74,6 @@ def suggest_transfers(current_team, free_transfers, transfer_budget, player_data
         transfers.append(best_transfer)
         remaining_budget -= best_transfer["transfer_in"]["price"] - best_transfer["transfer_out"]["price"]
         current_team.remove(best_transfer["transfer_out"])
-        current_team.append(best_transfer["transfer_in"])
         current_names.add(best_transfer["transfer_in"]["name"])
 
         print(f"Transfer Out: {best_transfer['transfer_out']['name']} ({best_transfer['transfer_out']['predicted_points']} pts) -> ")
