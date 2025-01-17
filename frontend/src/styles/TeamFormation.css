@@ -49,7 +49,7 @@
 .clear-button {
   align-items: center;
   width: 5vw;
-  height: 1.8vw;
+  height: 2.2vw;
   min-width: 50px;
   min-height: 30px;
   background: linear-gradient(90deg, #f39c12, #be7500);
@@ -66,7 +66,7 @@
 .edit-team-button, .set-team-button {
   align-items: end;
   width: 3vw;
-  height: 1.8vw;
+  height: 2.2vw;
   min-width: 115px;
   min-height: 30px;
   background: linear-gradient(90deg, #ffcf81, #f39c12);
@@ -81,8 +81,7 @@
 
 .orange-hover:hover {
   background: linear-gradient(90deg, #ffa467, #d35400);
-  color: #fff; 
-  box-shadow: 0 0 10px 2px #ffa467;
+  box-shadow: 0 0 4px 0px #ffa467;
 }
 
 .player-row:first-child {
@@ -242,7 +241,6 @@
 
 .tab {
   margin-top: 1.3rem;
-  margin-left: -10rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -259,9 +257,121 @@
   width: 1.5rem;
   height: 1.5rem;
   padding: 0.5rem;
-  margin-right: -10rem;
 }
 
 .tab:hover {
-  background-color: #434343;
+  background-color: #4c4c4c;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background-color: #2b2b2b;
+  padding: 20px;
+  border-radius: 8px;
+  width: 50%;
+  max-width: 800px;
+  max-height: 80%;
+  position: relative;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+  transition: color 0.1s;
+}
+
+.close-btn:hover {
+  color: #ff0000;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.primary-btn {
+  padding: 10px 15px;
+  background: linear-gradient(90deg, #3b9aff, #0058b6);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.1s;
+}
+
+.primary-btn:hover {
+  background: linear-gradient(90deg, #3186dc, #034ab5);
+  box-shadow: 0 0 3px #007bff; 
+}
+
+.search-container {
+  display: flex;
+  gap: 10px;
+  width: 80%;
+  padding-bottom: 2rem;
+  margin-top: 1rem;
+}
+
+.tf-loading {
+  margin-top: 0;
+  padding-bottom: 2rem;
+}
+
+.manager-list {
+  margin-bottom: 3px;
+  width: 20vw;
+}
+
+.managers-container {
+  display: flex;
+}
+
+.load-btn {
+  padding: 0px 15px;
+  max-height: 2.2vw;
+}
+
+.search-results-for {
+  margin-bottom: 1rem;
+}
+
+.search-results-container {
+  width: 76%;
+  background-color: #3a3a3a;
+  border: 1px solid #555;
+  padding: 15px;
+  margin-bottom: 0.6rem;
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

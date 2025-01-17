@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from scraper import scrape_stats
+from scraper import scrape_stats, scrape_fpl_managers, scrape_fpl_team
 from database import save_to_database, get_players_from_db
 from predictor import predict_player_points, suggest_transfers
 
@@ -62,6 +62,27 @@ def suggest_player_transfers():
         return jsonify(sorted_transfers), 200
     except Exception as e:
         return jsonify({"error": f"Failed to suggest transfers: {e}"}), 500
+    
+@app.route('/search-fpl-teams', methods=['POST'])
+def search_teams_by_manager():
+    try:
+        data = request.json
+        search_query = data.get("query", "")
+        manager_data = scrape_fpl_managers(search_query)
+        return jsonify(manager_data), 200
+    except Exception as e:
+        return jsonify({"error": f"Failed to fetch fpl teams: {e}"}), 500
+    
+@app.route('/load-fpl-team', methods=['POST'])
+def load_fpl_team():
+    try:
+        data = request.json
+        index = data.get("managerIndex", 0)
+        oldSearch = data.get("prevSearch", "")
+        team_data = scrape_fpl_team(index, oldSearch)
+        return jsonify(team_data), 200
+    except Exception as e:
+        return jsonify({"error": f"Failed to load fpl team: {e}"}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

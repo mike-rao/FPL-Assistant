@@ -84,6 +84,7 @@ function App() {
           loading={loading}
         />
         <TeamFormation
+          playerData={playerData}
           selectedPlayers={selectedPlayers}
           setSelectedPlayers={setSelectedPlayers}
           isPickTeamMode={isPickTeamMode}

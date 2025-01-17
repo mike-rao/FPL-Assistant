@@ -102,9 +102,82 @@ export const showPlayerInfo = (player) => {
   });
 };
 
-function TeamFormation({ selectedPlayers, setSelectedPlayers, isPickTeamMode, setIsPickTeamMode, highlightedPlayers }) {
+function TeamFormation({ playerData, selectedPlayers, setSelectedPlayers, isPickTeamMode, setIsPickTeamMode, highlightedPlayers }) {
   const [activePlayer, setActivePlayer] = useState(null);
   const [previousFormation, setPreviousFormation] = useState(null);
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [isSearchLoading, setIsSearchLoading] = useState(false);
+  const [searchManagers, setSearchManagers] = useState([]);
+  const [oldSearch, setOldSearch] = useState("");
+  const [selectedManager, setSelectedManager] = useState(null);
+
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:5000";
+
+  const handleSearch = async (searchQuery) => {
+    if (!searchQuery) {
+      Swal.fire({
+        text: 'Please enter a manager to search',
+        icon: 'warning',
+        confirmButtonText: 'OK'
+      });
+      return;
+    }
+
+    setSearchManagers([]);
+    setIsSearchLoading(true);
+    setOldSearch(searchQuery);
+    setSelectedManager(null);
+    try {
+      const response = await fetch(`${API_BASE_URL}/search-fpl-teams`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          query: searchQuery,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch fpl teams.");
+      }
+      const data = await response.json();
+      setSearchManagers(data);
+    } catch (error) {
+      console.error("Error fetching fpl teams:", error);
+    } finally {
+      setIsSearchLoading(false);
+    }
+  };
+
+  const handleLoadTeam = async (index) => {
+    setSearchManagers([]);
+    setIsSearchLoading(true);
+    try {
+      const response = await fetch(`${API_BASE_URL}/load-fpl-team`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          managerIndex: index,
+          prevSearch: oldSearch,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to load fpl team.");
+      }
+      const data = await response.json();
+      const loadedPlayers = data.map((playerName) => {
+        return playerData.find(player => player.display_name === playerName);
+      });
+      setSelectedPlayers(loadedPlayers);
+      togglePopup();
+    } catch (error) {
+      console.error("Error loading fpl team:", error);
+    } finally {
+      setIsSearchLoading(false);
+    }
+  };
 
   const handleClearTeam = () => {
     setSelectedPlayers([]);
@@ -157,6 +230,16 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers, isPickTeamMode, se
         confirmButtonText: "OK",
       });
     }
+  };
+
+  const togglePopup = () => {
+    setIsPopupVisible(!isPopupVisible);
+  };
+
+  const handleManagerSelect = (index) => {
+    setSelectedManager((prevSelected) => 
+      prevSelected === index ? null : index 
+    );
   };
 
   const handleToggleMode = () => {
@@ -317,15 +400,78 @@ function TeamFormation({ selectedPlayers, setSelectedPlayers, isPickTeamMode, se
     );
   };    
 
+  const SearchPopup = ({}) => {
+    const [searchQuery, setSearchQuery] = useState("");
+
+    const togglePopup = () => {
+      setIsPopupVisible(!isPopupVisible);
+      setSearchQuery("");
+      setSearchManagers([]);
+    };
+
+    return (
+      <div className="popup-overlay">
+        <div className="popup-content">
+          <button className="close-btn" onClick={togglePopup}>&times;</button>
+          <h2>Load Your FPL Team</h2>
+          <div className="search-container">
+            <input
+              type="text"
+              placeholder="Search by manager"
+              className="search-input"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <div className="popup-actions">
+              <button className="primary-btn" onClick={() => {handleSearch(searchQuery);}}>Search</button>
+            </div>
+          </div>
+          {isSearchLoading && 
+            <div className="loading-container tf-loading">
+              <div className="loader__btn">
+                <div className="loader"></div>
+                Loading...
+              </div>
+            </div>
+          }
+          <div className={`search-results-container ${searchManagers.length > 0 ? "" : "hidden"}`}>
+            {searchManagers.length > 0 && <div className="search-results-for">Search results for "{oldSearch}"</div>}
+            {searchManagers.map((row, index) => (
+              <div className="managers-container">
+                <button className="primary-btn load-btn hidden">Load</button>
+                <div className="player-list manager-list">
+                  <div 
+                    key={index}
+                    onClick={() => handleManagerSelect(index)} 
+                    className={selectedManager === index ? 'selected' : ''}
+                  >
+                    <td>{row[0]}</td>
+                    <td></td>
+                    <td className="player-team-display">| {row[1]}</td>
+                  </div>
+                </div>
+                <button 
+                  className={`primary-btn load-btn ${selectedManager !== index ? 'hidden' : ''}`} 
+                  onClick={() => handleLoadTeam(index, oldSearch)}>Load
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className={`middle-column ${isPickTeamMode ? 'pick-team-mode' : ''}`}>
       <div className="title">
         <div className="header-container">
-          {!isPickTeamMode && <svg class="invisible"></svg>}
+          {!isPickTeamMode && <svg class="invisible"></svg>}{!isPickTeamMode && <svg class="invisible"></svg>}{!isPickTeamMode && <svg class="invisible"></svg>}
           <h2>{isPickTeamMode ? "Your Team" : "Build Team"}</h2>
-          {!isPickTeamMode && <svg class="search-icon tab" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>}
+          {!isPickTeamMode && <svg class="search-icon tab" viewBox="0 0 24 24" onClick={togglePopup}><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>}{!isPickTeamMode && <svg class="invisible"></svg>}{!isPickTeamMode && <svg class="invisible"></svg>}
         </div>
       </div>
+      {isPopupVisible && (<SearchPopup/>)}
       <div className="team-formation-container">
         <div className="budget-container">
           <span className="budget">Budget: £{totalCost.toFixed(1)}m</span>

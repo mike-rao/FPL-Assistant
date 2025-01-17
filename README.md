@@ -2,14 +2,14 @@
 
 ## Development Overview
 
-The Fantasy Premier League (FPL) Assistant project is a comprehensive web application designed to enhance decision-making for FPL players. The app combines frontend and backend technologies with machine learning to predict player performance, suggest optimal transfers, and assist in team management. This project leverages modern development technologies, including React for the frontend, Flask for the backend API, and a PostgreSQL database for data storage and retrieval.
+The Fantasy Premier League (FPL) Assistant project is a comprehensive web application designed to enhance decision-making for FPL players. The app combines frontend and backend technologies with machine learning to predict player performance, suggest optimal transfers, and assist in team management. This project leverages modern development technologies, including React for the frontend, Flask for the backend API, PostgreSQL for the database, Scikit-learn for the machine learning model, and Selenium for scraping the web.
 
 ## Frontend Development
 
 The frontend of the FPL Assistant is built using React, a JavaScript library for creating dynamic and interactive user interfaces. The UI includes components that: 
 - Displays all players fetched from the database, allowing users to view and select players for their team. 
 - Provides a visual representation of the selected team in formation, enabling users to arrange players by position.
-- Shows analytical insights about the selected team, including metrics like team score and transfer suggestions.
+- Shows analytical insights about the selected team, including metrics like expected points, team score, and transfer suggestions.
 - Suggests potential player transfers to improve team performance based on predicted points and budget constraints.
 
 ## Backend Development
@@ -19,6 +19,8 @@ The backend is implemented using Flask, a Python microframework. It provides RES
 - Fetching Players - the /players endpoint retrieves player data from the database for frontend display.
 - Predicting Player Points - the /predict-pts endpoint predicts the amount of points a player will score the next week using a machine learning model trained on player statistics.
 - Generating Transfers - the /suggest-transfers endpoint calculates optimal transfer suggestions using hash maps, sorted lists, and a greedy algorithm to bring in the best net of predicted points.
+- Search for FPL teams - the /search-fpl-teams endpoint utilizes [fplbot.app](https://www.fplbot.app/) to search for existing FPL teams by manager name.
+- Load FPL team - the /load-fpl-team endpoint uses [fplform.com](https://fplform.com/) to find the players and load in the selected FPL team into the frontend.
 
 ## Machine Learning Integration
 
