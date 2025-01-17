@@ -167,8 +167,15 @@ function TeamFormation({ playerData, selectedPlayers, setSelectedPlayers, isPick
         throw new Error("Failed to load fpl team.");
       }
       const data = await response.json();
+      playerData.sort((b, a) => b.total_points - a.total_points);
       const loadedPlayers = data.map((playerName) => {
-        return playerData.find(player => player.display_name === playerName);
+        const matchingPlayers = playerData.filter(player => player.display_name === playerName);
+        if (matchingPlayers.length === 1) {
+          return matchingPlayers[0];
+        }
+        else {
+          return matchingPlayers.sort((a, b) => b.total_pts - a.total_pts)[0];
+        } 
       });
       setSelectedPlayers(loadedPlayers);
       togglePopup();
