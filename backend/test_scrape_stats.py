@@ -23,7 +23,7 @@ try:
     total_pages = int(pages.split("of")[-1].strip()) 
     total_pages = 3   # testing
     for page in range(1,total_pages+1):
-        table = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "Table-sc-ziussd-1.ElementTable-sc-1v08od9-0.iPaulP.OZmJL")))
+        table = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "Table-sc-ziussd-1.ElementTable-sc-1v08od9-0.iPaulP.dtAoHY")))
         rows = table.find_elements(By.CLASS_NAME, "ElementTable__ElementRow-sc-1v08od9-3.kGMjuJ")
         print(f"Found {len(rows)} rows.")
         rows = rows[:3]   # testing
@@ -37,10 +37,10 @@ try:
                 info_button.click()
                 popup = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "root-dialog")))
                 
-                name = popup.find_element(By.CLASS_NAME, "styles__ElementHeading-sc-ahs9zc-5.gwmHpL").text
+                name = popup.find_element(By.CLASS_NAME, "styles__ElementHeading-sc-ahs9zc-5.pMhDn").text
                 print(f"Popup for {name} opened successfully.")
                 display_name = row.find_element(By.CLASS_NAME, "ElementInTable__Name-sc-y9xi40-1.WjUOj").text
-                position = popup.find_element(By.CLASS_NAME, "styles__ElementTypeLabel-sc-ahs9zc-4.kDMSIW").text
+                position = popup.find_element(By.CLASS_NAME, "styles__ElementTypeLabel-sc-ahs9zc-4.gjUdZJ").text
                 form = float(popup.find_elements(By.CLASS_NAME, "styles__StatValue-sc-1tsp201-2.fgGEXH")[1].text)
                 pts_per_match = float(popup.find_elements(By.CLASS_NAME, "styles__StatValue-sc-1tsp201-2.fgGEXH")[2].text)
                 total_pts = int(popup.find_elements(By.CLASS_NAME, "styles__StatValue-sc-1tsp201-2.fgGEXH")[4].text)
@@ -79,7 +79,7 @@ try:
                 
                 file.write(display_name+","+week+","+position+","+str(form)+","+str(pts_per_match)+","+str(total_pts)+","+str(total_bonus)+","+str(ict_index)+","+str(tsb_percent)+","+str(fdr)+","+pts_scored+"\n")
 
-                popup.find_element(By.CLASS_NAME, "Dialog__CloseButton-sc-5bogmv-1.cgQMVU").click()
+                popup.find_element(By.CLASS_NAME, "Dialog__CloseButton-sc-5bogmv-1.gthsYI").click()
                 print(f"Popup for {name} closed.")
 
             except Exception as e:
